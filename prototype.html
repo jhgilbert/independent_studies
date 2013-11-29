@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html ng-app="independentStudies" ng-controller="mainCtrl">
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js"></script>
+
+<!-- fonts -->
+<link href='http://fonts.googleapis.com/css?family=Orienta' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:500' rel='stylesheet' type='text/css'>
+
+<!-- for Janrain OpenID auth modal -->
+<script type="text/javascript">
+    (function() {
+        if (typeof window.janrain !== 'object') window.janrain = {};
+        if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
+
+        janrain.settings.tokenUrl = '__REPLACE_WITH_YOUR_TOKEN_URL__';
+
+        function isReady() { janrain.ready = true; };
+        if (document.addEventListener) {
+            document.addEventListener("DOMContentLoaded", isReady, false);
+        } else {
+            window.attachEvent('onload', isReady);
+        }
+
+        var e = document.createElement('script');
+        e.type = 'text/javascript';
+        e.id = 'janrainAuthWidget';
+
+        if (document.location.protocol === 'https:') {
+            e.src = 'https://rpxnow.com/js/lib/independent-studi-es/engage.js';
+        } else {
+            e.src = 'http://widget-cdn.rpxnow.com/js/lib/independent-studi-es/engage.js';
+        }
+
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(e, s);
+    })();
+</script>
+
+<!-- big blob o' Angular to split up later -->
+<script>
+    var independentStudies = angular.module('independentStudies', []);
+
+    // Top-level controller
+    function mainCtrl($scope) {
+        $scope.navControls = {selectedPanel: 'dashboard'};
+    }
+
+    // Dashboard controller
+    function dashCtrl($scope) {
+        $scope.uiControls = {selectedResourceIndex: null};
+
+        // For prototyping only -- will be provided by API
+        $scope.resources = [
+            {name: "UX class", percentage: 42},
+            {name: "JavaScript class", percentage: 23},
+            {name: "Security book", percentage: 98}
+        ];
+
+        // PROGRESS BAR CREATION =======================================================================================
+
+        // Builds array to allow ng-repeat to build "completed" portion of progress bar
+        function buildCompletedArray(percentage) {
+            var arr = [];
+            for (var i=0;i<percentage;i++) {
+                arr.push(i);
+            }
+            return arr;
+        }
+
+        // Builds array to allow ng-repeat to build "remaining" portion of progress bar
+        function buildRemainderArray(percentage) {
+            var arr = [];
+            for (var i=0;i<(100-percentage);i++) {
+                arr.push(i);
+            }
+            return arr;
+        }
+
+        function buildProgressBars() {
+            for (var i=0;i<$scope.resources.length;i++) {
+                $scope.resources[i].completedArray = buildCompletedArray($scope.resources[i]['percentage']);
+                $scope.resources[i].remainderArray = buildRemainderArray($scope.resources[i]['percentage']);
+                $scope.resources[i].displayPercentage = $scope.resources[i]['percentage'];
+                $scope.resources[i].updateInProgress = false;
+            }
+        }
+
+        buildProgressBars();
+
+        // FORM CONTROLS ===============================================================================================
+
+        $scope.submitResourceForm = function() {
+            // post will go here
+            // get will go here
+            buildProgressBars();
+            for (var i=0;i<$scope.resources.length;i++) {
+                $scope.resources[i].updateInProgress = false;
+            }
+        };
+
+        // NOTEBOOK ====================================================================================================
+
+        // This will be an API call for the student's full enrollment in a given resource.
+        function getResourceDetail() {
+            $scope.notebookResource = {
+                name: "Javascript class",
+                percentage: 42,
+                url: "http://www.javascript.com",
+                difficulty: 'beginner',
+                description: "Just another JS class. Nothing too special about it.",
+                code: [],
+                profile: null
+            };
+            $scope.notebookPosts = [
+                {date: "11/2/2013", text: "Man, this stuff is awesome!"},
+                {date: "8/4/2013", text: "Almost there ..."},
+                {date: "7/22/2013", text: "<xmp><p>I keep reminding myself that everyone has to start somewhere.</p></xmp>"},
+                {date: "5/17/2013", text: "Getting the hang of it, I think. :)"},
+                {date: "1/4/2013", text: "Time to start my JavaScript journey. I'm so excited! http://www.cnn.com"}
+            ];
+            $scope.recentProgress = [
+                {date: "11/2/2013", percentage: 2},
+                {date: "8/4/2013", percentage: 5},
+                {date: "7/22/2013", percentage: 2},
+                {date: "5/17/2013", percentage: 7},
+                {date: "1/4/2013", percentage: 3}
+            ];
+        }
+
+        getResourceDetail();
+
+    }
+
+    // Controller for the resource management page (admins only)
+    function resourceCtrl($scope) {
+        $scope.uiControls = {detailEditInProgress: false, selectedResource: null};
+
+        // For prototyping only ... will be provided by API
+        $scope.resources = [
+            {name: "UX class", difficulty: "beginner", free: true, tags: ["UX"], url: "http://blah.com", description: null, author: "Steve Smith"},
+            {name: "JavaScript class", difficulty: "intermediate", free: false, tags: ["JavaScript", "front end"], url: "http://blah.com", description: null, author: "Bill Blarney"},
+            {name: "Security book", difficulty: "beginner", free: true, tags: ["security"], url: "http://blah.com", description: null, author: "Jane Fonda"}
+        ];
+
+        // FORM CONTROLS ===============================================================================================
+
+        $scope.resetTagForms = function () {
+            $scope.newTag = null;
+            $scope.uiControls.formData.tagAddInProgress = false;
+            for (var i=0;i<$scope.resources.length;i++) {
+                $scope.resources[i].tagAddInProgress = false;
+            }
+        };
+
+        function resetSavedChanges() {
+            for (var i=0;i<$scope.resources.length;i++) {
+                $scope.resources[i].hasUnsavedChanges = false;
+            }
+        }
+
+        resetSavedChanges();
+
+        function resetFormData() {
+            for (var i=0;i<$scope.resources.length;i++) {
+                $scope.resources[i].hasUnsavedChanges = false;
+            }
+            $scope.uiControls.detailEditInProgress = null;
+            $scope.uiControls.selectedResource = null;
+            $scope.uiControls.formData = {
+                name: null,
+                difficulty: null,
+                free: false,
+                tags: [],
+                url: null,
+                tagAddInProgress: false,
+                hasUnsavedChanges: false,
+                description: null,
+                author: null
+            };
+        }
+
+        resetFormData();
+
+        $scope.newTag = null;
+
+        // CRUD ========================================================================================================
+
+        // Should use PUT call to API eventually
+        $scope.addResource = function () {
+            $scope.resources.push($scope.uiControls.formData);
+            resetFormData();
+            resetSavedChanges();
+        };
+
+        // Should use DELETE call to API eventually
+        $scope.deleteResource = function (index) {
+            $scope.resources.splice(index,1);
+        };
+
+        // Should use POST to update eventually
+        $scope.updateResource = function () {
+            $scope.resources[$scope.uiControls.selectedResource] = $scope.uiControls.formData;
+            resetFormData();
+        };
+    }
+</script>
+
+<style>
+    /* general */
+
+    body {
+        background-image: url("stripe.png");
+        background-color: #0b2c3c;
+        font-family: 'Arial';
+        font-size: 15px;
+        margin: auto;
+        width: 960px;
+    }
+
+    h1, h2, h3, h4 {
+        font-family: 'Orienta';
+    }
+
+    a {
+        text-decoration: none;
+        color: #ff6666;
+    }
+
+    td {
+        padding: 0px 10px 5px 10px;
+    }
+
+    .float-right {
+        float: right;
+    }
+
+    .section {
+        background-color: white;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 5px;
+        background-color: #0b2c3c;
+        color: white;
+        border-radius: 5px;
+        font-size: 12px;
+        letter-spacing: 1px;
+        margin: 0px 5px 0px 5px;
+        font-family: 'Orienta';
+        cursor: pointer;
+    }
+
+    /* nav */
+
+    .top-nav {
+        padding: 10px;
+        border-radius: 0px 0px 5px 5px;
+        margin-bottom: 15px;
+    }
+
+    .nav-link {
+        display: inline-block;
+        cursor: pointer;
+        color: #024160;
+        margin-right: 10px;
+        margin-left: 10px;
+        padding: 5px;
+    }
+
+    .selectedPill {
+        color: white !important;
+        font-weight: bold;
+        background-color: #ff6666;
+        border-radius: 5px;
+    }
+
+    /* progress bars */
+    .resource-header h4 {
+        margin-bottom: 0px;
+    }
+
+    .progress-section h4 {
+        margin-top: 0px;
+    }
+
+    .progress-section {
+        padding: 10px 0px 10px 10px;
+        width: 220px;
+        background-color: #e9e9e9;
+        border-left: 10px solid lightgray;
+        border-radius: 5px 0px 0px 5px;
+        margin-bottom: 10px;
+        margin-right: -2px;
+    }
+
+    .progress-bars {
+        display: inline-block;
+        max-width: 500px;
+    }
+
+    .progress-section .button {
+        font-size: 11px;
+        padding: 3px;
+        letter-spacing: 1px;
+        font-family: Arial;
+    }
+
+    .progress-unit {
+        display: inline-block;
+        width: 2px;
+        height: 8px;
+        margin: 10px 0px 0px 0px;
+    }
+
+    .done {
+        background-color: #1eb69b;
+    }
+
+    .selectedResource .progress-unit.done {
+        background-color: #2be7c6;
+    }
+
+    .to-go {
+        background-color: #dadfe1;
+    }
+
+    .selectedResource {
+        border-left: 10px solid #ff6666;
+        background-color: white !important;
+    }
+
+    /* notebook */
+    .notebook {
+        display: inline-block;
+        vertical-align: top;
+        padding: 15px 30px 15px 30px;
+        width: 660px;
+        border-radius: 0px 5px 5px 0px;
+        margin-left: -2px;
+    }
+
+    .notebook h2 {
+        margin-top: 0px;
+    }
+
+    .notebook-subhead {
+        background-color: #ff6666;
+        padding: 2px 4px 2px 4px;
+        margin-bottom: 2px;
+        margin-top: 25px;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 12px;
+    }
+
+    .post-date {
+        font-weight: bold;
+    }
+
+    /* resource manager */
+
+    .resource-manager {
+        padding: 15px;
+    }
+
+    .resource-header {
+        display: inline-block;
+    }
+
+    .table-header {
+        font-weight: bold;
+    }
+
+    .tag {
+        background-color: gray;
+        color: white;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 11px;
+        letter-spacing: 1px;
+        border-radius: 3px;
+        margin-right: 3px;
+        padding: 3px;
+        font-family: 'Helvetica';
+    }
+
+</style>
+
+</head>
+<body>
+
+<!-- top nav -->
+<div class="section top-nav">
+    <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='dashboard'}" ng-click="navControls.selectedPanel='dashboard'">Dashboard</div>
+    <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='resourceManager'}" ng-click="navControls.selectedPanel='resourceManager'">Resource Manager</div>
+    <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='findResources'}" ng-click="navControls.selectedPanel='findResources'">Find Resources</div>
+    <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='transcript'}" ng-click="navControls.selectedPanel='transcript'">Transcript</div>
+    <a class="janrainEngage" href="#">Sign In</a>
+</div>
+
+<!-- resource manager (will eventually be its own template) -->
+<div ng-controller="resourceCtrl" ng-show="navControls.selectedPanel==='resourceManager'">
+    <div class="section resource-manager">
+        <!-- table of existing resources -->
+        <table>
+            <tr>
+                <td class="table-header">Name</td>
+                <td class="table-header">URL</td>
+                <td class="table-header">Difficulty</td>
+                <td class="table-header">Free?</td>
+                <td class="table-header">Tags</td>
+                <td class="table-header">Description</td>
+                <td class="table-header">Action</td>
+            </tr>
+            <tr ng-repeat="r in resources">
+                <td><input type="text" ng-model="r.name" ng-change="r.hasUnsavedChanges=true"></td>
+                <td><input type="text" ng-model="r.url" ng-change="r.hasUnsavedChanges=true"></td>
+                <td><input type="text" ng-model="r.difficulty" ng-change="r.hasUnsavedChanges=true"></td>
+                <td><input type="checkbox" ng-model="r.free" ng-change="r.hasUnsavedChanges=true"></td>
+                <td>
+                    <span class="tag" ng-repeat="tag in r.tags" ng-bind="tag"></span>
+                    <a href="javascript:" ng-click="r.tagAddInProgress=true">+</a>
+                        <span ng-show="r.tagAddInProgress">
+                            <input type="text" ng-model="newTag">
+                            <button type="submit" ng-click="r.tags.push(newTag); resetTagForms();">Submit</button>
+                        </span>
+                </td>
+                <td><input type="text" ng-model="r.description" ng-change="r.hasUnsavedChanges=true"></td>
+                <td><div class="button" ng-show="r.hasUnsavedChanges">Save Changes</div>
+                    <div class="button" ng-show="!r.hasUnsavedChanges" ng-click="uiControls.detailEditInProgress=true; uiControls.formData=r; uiControls.selectedResource=$index">Edit Details</div>
+                    <div class="button" ng-click="deleteResource($index)">Delete</div></td>
+            </tr>
+
+            <!-- quick tr form to add a new resource -->
+            <tr ng-show="!uiControls.detailEditInProgress">
+                <form>
+                    <td><input type="text" ng-model="uiControls.formData.name" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
+                    <td><input type="text" ng-model="uiControls.formData.url" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
+                    <td><input type="text" ng-model="uiControls.formData.difficulty" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
+                    <td><input type="checkbox" ng-model="uiControls.formData.free" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
+                    <td>
+                        <span class="tag" ng-repeat="tag in uiControls.formData.tags" ng-bind="tag"></span>
+                        <a href="javascript:" ng-click="uiControls.formData.tagAddInProgress=true">+</a>
+                        <span ng-show="uiControls.formData.tagAddInProgress">
+                            <input type="text" ng-model="newTag">
+                            <button type="submit" ng-click="uiControls.formData.tags.push(newTag); resetTagForms();">Submit</button>
+                        </span>
+                    </td>
+                    <td><input type="text" ng-model="uiControls.formData.description" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
+                    <td><div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="addResource()">Save Changes</div></td>
+                </form>
+            </tr>
+        </table>
+    </div>
+
+    <!-- detailed edit panel -->
+    <div class="section resource-manager" ng-show="uiControls.detailEditInProgress">
+        <form>
+            <h3>Edit "{{uiControls.formData.name}}"</h3>
+            <p>Name: <input type="text" ng-model="uiControls.formData.name" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
+            <p>Difficulty: <input type="text" ng-model="uiControls.formData.url" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
+            <p><input type="checkbox" ng-model="uiControls.formData.free" ng-change="uiControls.formData.hasUnsavedChanges=true"> This course is free</p>
+            <p>Description:</p>
+            <textarea ng-model="uiControls.formData.description" ng-change="uiControls.formData.hasUnsavedChanges=true"></textarea>
+            </p>
+            <p>Tags: <span class="tag" ng-repeat="tag in uiControls.formData.tags" ng-bind="tag"></span></p>
+            </p>
+                <a href="javascript:" ng-click="uiControls.formData.tagAddInProgress=true">Add tag</a>
+                <span ng-show="uiControls.formData.tagAddInProgress">
+                    <input type="text" ng-model="newTag">
+                    <button type="submit" ng-click="uiControls.formData.tags.push(newTag); resetTagForms(); uiControls.formData.hasUnsavedChanges=true">Submit</button>
+                </span>
+            </p>
+            <div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="updateResource()">Save Changes</div>
+        </form>
+    </div>
+
+
+</div>
+
+<!-- dashboard (will eventually be its own template) -->
+<div ng-controller="dashCtrl">
+
+    <!-- column of progress bars -->
+    <div ng-show="navControls.selectedPanel==='dashboard'" class="progress-bars">
+        <div class="progress-section" ng-repeat="r in resources" ng-click="uiControls.selectedResourceIndex=$index" ng-class="{selectedResource: uiControls.selectedResourceIndex===$index}">
+            <div>
+                <div class="resource-header"><h4><span ng-bind="r.name"></span></h4></div>
+            </div>
+            <div style="clear: both;">
+                <div class="done progress-unit" ng-repeat="unit in r.completedArray"></div><div class="to-go progress-unit" ng-repeat="unit in r.remainderArray"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- detailed view of user's progress on the selected learning resource -->
+    <div class="section notebook" ng-show="navControls.selectedPanel==='dashboard'">
+        <h2><a href="{{notebookResource.url}}">{{notebookResource.name}} ({{notebookResource.percentage}}%)</a></h2>
+        <p>{{notebookResource.description}}</p>
+        <h3 class="notebook-subhead">Recent Progress</h3>
+        <ul>
+            <li ng-repeat="item in recentProgress">{{item.percentage}}% on {{item.date}}</li>
+        </ul>
+        <h3 class="notebook-subhead">Notes</h3>
+        <div ng-repeat="post in notebookPosts">
+            <p class="post-date">{{post.date}}</p>
+            <p>{{post.text}}</p>
+            <hr/>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
