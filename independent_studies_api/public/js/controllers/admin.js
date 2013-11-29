@@ -1,5 +1,5 @@
 // Controller for the resource management page (admins only)
-function resourceCtrl($scope, $http) {
+function adminCtrl($scope, $http) {
     $scope.uiControls = {detailEditInProgress: false, selectedResource: null};
     $scope.resources = [];
 

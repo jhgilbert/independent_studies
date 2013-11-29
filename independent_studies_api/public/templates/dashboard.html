@@ -1,0 +1,30 @@
+<div ng-controller="dashCtrl">
+
+    <!-- column of progress bars -->
+    <div class="progress-bars">
+        <div class="progress-section" ng-repeat="r in resources" ng-click="uiControls.selectedResourceIndex=$index" ng-class="{selectedResource: uiControls.selectedResourceIndex===$index}">
+            <div>
+                <div class="resource-header"><h4><span ng-bind="r.name"></span></h4></div>
+            </div>
+            <div style="clear: both;">
+                <div class="done progress-unit" ng-repeat="unit in r.completedArray"></div><div class="to-go progress-unit" ng-repeat="unit in r.remainderArray"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- detailed view of user's progress on the selected learning resource -->
+    <div class="section notebook">
+        <h2><a href="{{notebookResource.url}}">{{notebookResource.name}} ({{notebookResource.percentage}}%)</a></h2>
+        <p>{{notebookResource.description}}</p>
+        <h3 class="notebook-subhead">Recent Progress</h3>
+        <ul>
+            <li ng-repeat="item in recentProgress">{{item.percentage}}% on {{item.date}}</li>
+        </ul>
+        <h3 class="notebook-subhead">Notes</h3>
+        <div ng-repeat="post in notebookPosts">
+            <p class="post-date">{{post.date}}</p>
+            <p>{{post.text}}</p>
+            <hr/>
+        </div>
+    </div>
+</div>
