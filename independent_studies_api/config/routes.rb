@@ -2,7 +2,7 @@ IndependentStudiesApi::Application.routes.draw do
   resources :sessions, :only => [:create, :index]
   get "static_pages/home"
   get "sessions/logout"
-  root 'static_pages#home'
+  # root 'static_pages#home'
   resources :courses
 
   # The priority is based upon order of creation: first created -> highest priority.
