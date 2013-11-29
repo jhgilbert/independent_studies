@@ -1,5 +1,5 @@
 IndependentStudiesApi::Application.routes.draw do
-  resources :enrollments
+  resources :enrollments, :only => [:create]
 
   resources :sessions, :only => [:create, :index]
   get "static_pages/home"
