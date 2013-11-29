@@ -1,6 +1,16 @@
 class SessionsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create]
 
+  def index
+  	@response = nil
+  	if session[:id] == nil
+  		@response = false
+  	else
+  		@response = true
+  	end
+  	render json: @response
+  end
+
   def create
   	auth = JSON.parse(RestClient.post 'https://rpxnow.com/api/v2/auth_info', :token => params[:token], :apiKey => RPX_API_KEY)
   	current_user = User.find_by_identifier(auth['profile']['identifier'])
@@ -13,9 +23,8 @@ class SessionsController < ApplicationController
   		)
   		new_user.save
   		current_user = new_user
-  	else
-  		session[:id] = current_user.id
   	end
+  	session[:id] = current_user.id
   	redirect_to root_url
   end
 
