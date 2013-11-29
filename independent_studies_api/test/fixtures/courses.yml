@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  author: MyString
+  difficulty: MyString
+  free: false
+  publisher: MyString
+
+two:
+  author: MyString
+  difficulty: MyString
+  free: false
+  publisher: MyString
