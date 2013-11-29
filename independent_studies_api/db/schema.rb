@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20131129044213) do
 
   create_table "courses", force: true do |t|
     t.string   "author"
+    t.string   "url"
     t.string   "title"
     t.text     "description"
     t.string   "difficulty"

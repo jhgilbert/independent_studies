@@ -22,7 +22,7 @@
                 <td class="table-header">Action</td>
             </tr>
             <tr ng-repeat="r in resources">
-                <td><input type="text" ng-model="r.name" ng-change="r.hasUnsavedChanges=true"></td>
+                <td><input type="text" ng-model="r.title" ng-change="r.hasUnsavedChanges=true"></td>
                 <td><input type="text" ng-model="r.url" ng-change="r.hasUnsavedChanges=true"></td>
                 <td><input type="text" ng-model="r.difficulty" ng-change="r.hasUnsavedChanges=true"></td>
                 <td><input type="checkbox" ng-model="r.free" ng-change="r.hasUnsavedChanges=true"></td>
@@ -43,7 +43,7 @@
             <!-- quick tr form to add a new resource -->
             <tr ng-show="!uiControls.detailEditInProgress">
                 <form>
-                    <td><input type="text" ng-model="uiControls.formData.name" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
+                    <td><input type="text" ng-model="uiControls.formData.title" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
                     <td><input type="text" ng-model="uiControls.formData.url" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
                     <td><input type="text" ng-model="uiControls.formData.difficulty" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
                     <td><input type="checkbox" ng-model="uiControls.formData.free" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>

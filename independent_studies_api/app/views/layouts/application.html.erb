@@ -48,6 +48,12 @@
 <script>
     var independentStudies = angular.module('independentStudies', []);
 
+    independentStudies.config([
+  "$httpProvider", function($httpProvider) {
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+  }
+]);
+
     // Top-level controller
     function mainCtrl($scope) {
         $scope.navControls = {selectedPanel: 'dashboard'};
@@ -140,15 +146,14 @@
     }
 
     // Controller for the resource management page (admins only)
-    function resourceCtrl($scope) {
+    function resourceCtrl($scope, $http) {
         $scope.uiControls = {detailEditInProgress: false, selectedResource: null};
+        $scope.resources = [];
 
         // For prototyping only ... will be provided by API
-        $scope.resources = [
-            {name: "UX class", difficulty: "beginner", free: true, tags: ["UX"], url: "http://blah.com", description: null, author: "Steve Smith"},
-            {name: "JavaScript class", difficulty: "intermediate", free: false, tags: ["JavaScript", "front end"], url: "http://blah.com", description: null, author: "Bill Blarney"},
-            {name: "Security book", difficulty: "beginner", free: true, tags: ["security"], url: "http://blah.com", description: null, author: "Jane Fonda"}
-        ];
+        $http.get('/courses').success(function(data, status, headers, config) {
+        	$scope.resources = data;
+        });
 
         // FORM CONTROLS ===============================================================================================
 
@@ -175,7 +180,7 @@
             $scope.uiControls.detailEditInProgress = null;
             $scope.uiControls.selectedResource = null;
             $scope.uiControls.formData = {
-                name: null,
+                title: null,
                 difficulty: null,
                 free: false,
                 tags: [],
@@ -195,9 +200,13 @@
 
         // Should use PUT call to API eventually
         $scope.addResource = function () {
-            $scope.resources.push($scope.uiControls.formData);
-            resetFormData();
-            resetSavedChanges();
+        	delete $scope.uiControls.formData['tags'];
+        	delete $scope.uiControls.formData['tagAddInProgress'];
+        	delete $scope.uiControls.formData['hasUnsavedChanges'];
+        	$http.post('/courses', {'course': $scope.uiControls.formData}).success(function (){
+        		resetFormData();
+        		resetSavedChanges();
+        	});
         };
 
         // Should use DELETE call to API eventually
