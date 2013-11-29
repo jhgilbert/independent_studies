@@ -5,7 +5,7 @@
     <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='findResources'}" ng-click="navControls.selectedPanel='findResources'">Find Resources</div>
     <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='transcript'}" ng-click="navControls.selectedPanel='transcript'">Transcript</div>
     <div class="nav-link" ng-show="sessionData.userIsLoggedIn">
-        Hi, {{sessionData.name}}
+        Hi, {{sessionData.name}} (<a href="/sessions/logout">log out</a>)
     </div>
     <div ng-hide="sessionData.userIsLoggedIn">
         <a class="janrainEngage" href="#">Sign In</a>

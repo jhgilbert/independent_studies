@@ -30,8 +30,8 @@ class SessionsController < ApplicationController
   	redirect_to root_url
   end
 
-  def destroy
-  	# remove the user's ID from the session
-  	# redirect to the home page
+  def logout
+  	session[:id] = nil
+    redirect_to root_url
   end
 end
