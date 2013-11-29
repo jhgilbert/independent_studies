@@ -1,5 +1,13 @@
 var independentStudies = angular.module('independentStudies', []);
 
+independentStudies.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.
+        when('/dashboard', {templateUrl: 'templates/dashboard.html'}).
+        when('/courses', {templateUrl: 'templates/courses.html'}).
+        when('/admin', {templateUrl: 'templates/admin.html'}).
+        otherwise({redirectTo: '/'});
+}]);
+
 // Top-level controller
 function mainCtrl($scope, $http) {
     $scope.navControls = {selectedPanel: 'dashboard'};
