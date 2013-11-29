@@ -35,9 +35,9 @@
                         </span>
                 </td>
                 <td><input type="text" ng-model="r.description" ng-change="r.hasUnsavedChanges=true"></td>
-                <td><div class="button" ng-show="r.hasUnsavedChanges">Save Changes</div>
+                <td><div class="button" ng-show="r.hasUnsavedChanges" ng-click="updateResource($index)">Save Changes</div>
                     <div class="button" ng-show="!r.hasUnsavedChanges" ng-click="uiControls.detailEditInProgress=true; uiControls.formData=r; uiControls.selectedResource=$index">Edit Details</div>
-                    <div class="button" ng-click="deleteResource($index)">Delete</div></td>
+                    <div class="button" ng-click="deleteResource(r.id)">Delete</div></td>
             </tr>
 
             <!-- quick tr form to add a new resource -->

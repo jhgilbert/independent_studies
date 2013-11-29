@@ -150,10 +150,13 @@
         $scope.uiControls = {detailEditInProgress: false, selectedResource: null};
         $scope.resources = [];
 
-        // For prototyping only ... will be provided by API
-        $http.get('/courses').success(function(data, status, headers, config) {
-        	$scope.resources = data;
-        });
+        function refreshCourses() {
+        	$http.get('/courses').success(function(data, status, headers, config) {
+        	    $scope.resources = data;
+            });
+        };
+
+        refreshCourses();
 
         // FORM CONTROLS ===============================================================================================
 
@@ -198,7 +201,6 @@
 
         // CRUD ========================================================================================================
 
-        // Should use PUT call to API eventually
         $scope.addResource = function () {
         	delete $scope.uiControls.formData['tags'];
         	delete $scope.uiControls.formData['tagAddInProgress'];
@@ -206,18 +208,25 @@
         	$http.post('/courses', {'course': $scope.uiControls.formData}).success(function (){
         		resetFormData();
         		resetSavedChanges();
+        		refreshCourses();
         	});
         };
 
-        // Should use DELETE call to API eventually
-        $scope.deleteResource = function (index) {
-            $scope.resources.splice(index,1);
+        $scope.deleteResource = function (id) {
+            $http.delete('/courses/' + id).success(function (){
+            	refreshCourses();
+            });
         };
 
-        // Should use POST to update eventually
-        $scope.updateResource = function () {
-            $scope.resources[$scope.uiControls.selectedResource] = $scope.uiControls.formData;
-            resetFormData();
+        $scope.updateResource = function (index) {
+        	delete $scope.resources[index]['tags'];
+        	delete $scope.resources[index]['tagAddInProgress'];
+        	delete $scope.resources[index]['hasUnsavedChanges'];
+            $http.put('/courses/' + $scope.resources[index]['id'], {'course': $scope.resources[index]}).success(function (){
+        		resetFormData();
+        		resetSavedChanges();
+        		refreshCourses();
+        	});
         };
     }
 </script>
