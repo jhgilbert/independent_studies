@@ -1,4 +1,5 @@
 IndependentStudiesApi::Application.routes.draw do
+  resources :sessions
   get "static_pages/home"
   root 'static_pages#home'
   resources :courses
