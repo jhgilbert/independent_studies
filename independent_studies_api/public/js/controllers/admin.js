@@ -1,5 +1,7 @@
 // Controller for the resource management page (admins only)
 function adminCtrl($scope, $http) {
+    $scope.navControls.selectedPanel = 'admin';
+
     $scope.uiControls = {detailEditInProgress: false, selectedResource: null};
     $scope.resources = [];
 
@@ -7,7 +9,7 @@ function adminCtrl($scope, $http) {
         $http.get('/courses').success(function(data, status, headers, config) {
             $scope.resources = data;
         });
-    };
+    }
 
     refreshCourses();
 

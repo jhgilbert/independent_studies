@@ -1,3 +1,11 @@
-<div class="section">
-    This will be the courses page, but there's nothing here yet. Sorry!
+<div ng-controller="coursesCtrl">
+    <div class="section">
+        <div ng-repeat="c in courses" style="border: 1px solid black; padding: 15px;">
+            <p ng-bind="c.title"></p>
+            <p ng-bind="c.author"></p>
+            <p ng-bind="c.description"></p>
+            <p>Free? <span ng-bind="c.free"></span></p>
+            <div class="button">Enroll</button>
+        </div>
+    </div>
 </div>

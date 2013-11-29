@@ -1,5 +1,7 @@
 // Dashboard controller
 function dashCtrl($scope) {
+    $scope.navControls.selectedPanel = 'dashboard';
+
     $scope.uiControls = {selectedResourceIndex: null};
 
     // For prototyping only -- will be provided by API
