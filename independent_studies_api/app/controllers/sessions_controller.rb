@@ -4,9 +4,11 @@ class SessionsController < ApplicationController
   def index
   	@response = nil
   	if session[:id] == nil
-  		@response = false
+  		@response = {"name" => nil}
   	else
-  		@response = true
+      user = User.find_by(session[:id])
+      # May expand this a bit later
+      @response = {"name" => user.first_name}
   	end
   	render json: @response
   end

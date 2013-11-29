@@ -4,7 +4,12 @@
     <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='resourceManager'}" ng-click="navControls.selectedPanel='resourceManager'">Resource Manager</div>
     <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='findResources'}" ng-click="navControls.selectedPanel='findResources'">Find Resources</div>
     <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='transcript'}" ng-click="navControls.selectedPanel='transcript'">Transcript</div>
-    <a class="janrainEngage" href="#">Sign In</a>
+    <div class="nav-link" ng-show="sessionData.userIsLoggedIn">
+        Hi, {{sessionData.name}}
+    </div>
+    <div ng-hide="sessionData.userIsLoggedIn">
+        <a class="janrainEngage" href="#">Sign In</a>
+    </div>
 </div>
 
 <!-- resource manager (will eventually be its own template) -->
