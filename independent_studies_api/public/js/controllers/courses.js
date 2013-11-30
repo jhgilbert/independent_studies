@@ -3,7 +3,8 @@ function coursesCtrl($scope, $http) {
 
     function refreshCourses() {
         $http.get('/courses').success(function (data) {
-            $scope.courses = data;
+            $scope.courses = data.courses;
+            $scope.enrollmentKey = data.enrollment_key;
         });
     }
     refreshCourses();

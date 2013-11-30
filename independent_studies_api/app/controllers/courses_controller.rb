@@ -1,8 +1,23 @@
 class CoursesController < ApplicationController
 
 	def index
-		@courses = Course.all
-		render json: @courses
+		@response = {}
+		courses = Course.all
+		enrollment_key = {}
+		if session[:id] != nil
+			user = User.find(session[:id])
+			courses.each do |c|
+				if user.courses.include?(c)
+					# suppress courses the user is already enrolled in
+					courses.delete!(c)
+					# alternatively, inform the UI which courses the user is enrolled in
+					# enrollment_key[c.id] = true
+				end
+			end
+		end
+		@response['courses'] = courses
+		@response['enrollment_key'] = enrollment_key
+		render json: @response
 	end
 
 	def create
