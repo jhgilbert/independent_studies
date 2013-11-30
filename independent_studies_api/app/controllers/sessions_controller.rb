@@ -8,7 +8,8 @@ class SessionsController < ApplicationController
   	else
       user = User.find_by(session[:id])
       # May expand this a bit later
-      @response = {"name" => user.first_name}
+      puts "User admin is #{user.is_admin}"
+      @response = {"name" => user.first_name, "admin" => user.is_admin}
   	end
   	render json: @response
   end
@@ -21,7 +22,8 @@ class SessionsController < ApplicationController
   			:identifier => auth['profile']['identifier'],
   			:first_name => auth['profile']['name']['givenName'],
   			:last_name => auth['profile']['name']['familyName'],
-  			:email => auth['profile']['email'] 
+  			:email => auth['profile']['email'],
+        :is_admin => false 
   		)
   		new_user.save
   		current_user = new_user

@@ -60,7 +60,7 @@
 <!-- top nav -->
 <div class="section top-nav" ng-show="navControls.globalNavIsVisible">
     <div ng-show="sessionData.userIsLoggedIn" class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='dashboard'}" ng-click="navControls.selectedPanel='dashboard'"><a class="plain-link" href="#/dashboard">Dashboard</a></div>
-    <div ng-show="sessionData.userIsLoggedIn" class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='admin'}" ng-click="navControls.selectedPanel='admin'"><a class="plain-link" href="#/admin">Admin</a></div>
+    <div ng-show="sessionData.userIsLoggedIn && sessionData.userIsAdmin" class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='admin'}" ng-click="navControls.selectedPanel='admin'"><a class="plain-link" href="#/admin">Admin</a></div>
     <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='courses'}" ng-click="navControls.selectedPanel='courses'"><a class="plain-link" href="#/courses">Courses</a></div>
     <div ng-show="sessionData.userIsLoggedIn" class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='transcript'}" ng-click="navControls.selectedPanel='transcript'"><a class="plain-link" href="#/transcript">Transcript</a></div>
     <div style="float: right;" class="nav-link" ng-show="sessionData.userIsLoggedIn">

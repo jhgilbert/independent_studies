@@ -17,6 +17,7 @@ function mainCtrl($scope, $http) {
     function refreshUserData() {
         $http.get('/sessions').success(function (data) {
             $scope.sessionData.name = data.name;
+            $scope.sessionData.userIsAdmin = data.admin;
             if ($scope.sessionData.name !== null) {
                 $scope.sessionData.userIsLoggedIn = true;
             } else {
