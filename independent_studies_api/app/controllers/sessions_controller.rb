@@ -6,9 +6,12 @@ class SessionsController < ApplicationController
   	if session[:id] == nil
   		@response = {"name" => nil}
   	else
-      user = User.find_by(session[:id])
+      user = User.find(session[:id])
       # May expand this a bit later
-      puts "User admin is #{user.is_admin}"
+      puts "***********************************"
+      puts "User ID is #{session[:id]}"
+      puts "User is #{user.attributes}"
+      puts "***********************************"
       @response = {"name" => user.first_name, "admin" => user.is_admin}
   	end
   	render json: @response

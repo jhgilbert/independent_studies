@@ -39,10 +39,9 @@ class CoursesController < ApplicationController
 
 	protected
 	def verify_admin_privileges
-		if User.find(session[:id]).is_admin
-			return true
-		else
-			return false
+		user = User.find(session[:id])
+		if user.is_admin == false
+			render :status => :forbidden, :text => "You don't have permission to do that."
 		end
 	end
 

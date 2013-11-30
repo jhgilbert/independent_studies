@@ -1,5 +1,5 @@
 // Controller for the resource management page (admins only)
-function adminCtrl($scope, $http) {
+function adminCtrl($scope, $http, $location) {
     $scope.navControls.selectedPanel = 'admin';
 
     $scope.uiControls = {detailEditInProgress: false, selectedResource: null};
@@ -64,12 +64,16 @@ function adminCtrl($scope, $http) {
             resetFormData();
             resetSavedChanges();
             refreshCourses();
+        }).error(function (){
+                $location.path("/");
         });
     };
 
     $scope.deleteResource = function (id) {
         $http.delete('/courses/' + id).success(function (){
             refreshCourses();
+        }).error(function (){
+                $location.path("/");
         });
     };
 
@@ -81,6 +85,8 @@ function adminCtrl($scope, $http) {
             resetFormData();
             resetSavedChanges();
             refreshCourses();
+        }).error(function (){
+                $location.path("/");
         });
     };
 }
