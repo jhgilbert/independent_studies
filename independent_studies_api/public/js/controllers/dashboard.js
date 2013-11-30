@@ -17,25 +17,27 @@ function dashCtrl($scope, $http) {
     function getNotebookDetail(enrollment_id) {
         $http.get('/notebook/detail?enrollment_id=' + enrollment_id).success(function (data){
             $scope.notebookDetail = data.detail;
+            $scope.advancementAmount = $scope.notebookDetail.percentage;
         });
     }
 
-    function getNotebookIndex() {
+    function refreshNotebook() {
         $http.get('/notebook/index').success(function (data) {
+            $scope.advancementInProgress = false;
             $scope.notebookIndex = data.notebook;
-            getNotebookDetail($scope.notebookIndex[0]['id']);
+            getNotebookDetail($scope.notebookIndex[$scope.uiControls.selectedNotebookItem]['id']);
             buildProgressBars();
         });
     }
 
-    getNotebookIndex();
+    refreshNotebook();
 
     $scope.selectNotebookItem = function(index) {
         $scope.uiControls.selectedNotebookItem = index;
         getNotebookDetail($scope.notebookIndex[index]['id']);
-    }
+    };
 
-    // PROGRESS BAR CREATION =======================================================================================
+    // PROGRESS BAR CREATION ===========================================================================================
 
     // Builds array to allow ng-repeat to build "completed" portion of progress bar
     function buildCompletedArray(percentage) {
@@ -55,8 +57,14 @@ function dashCtrl($scope, $http) {
         return arr;
     }
 
-
-
     getNotebookDetail($scope.note);
+
+    // PROGRESS UPDATES ================================================================================================
+
+    $scope.createAdvancement = function(enrollment_id) {
+        $http.post('/advancements', {'advancement': {'enrollment_id': enrollment_id, 'amount': (parseInt($scope.advancementAmount) - $scope.notebookDetail.percentage)}}).success(function () {
+            refreshNotebook();
+        });
+    };
 
 }

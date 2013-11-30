@@ -16,18 +16,20 @@ class NotebookController < ApplicationController
   	user = User.find(session[:id])
   	detail = {}
   	enrollment = Enrollment.find(params[:enrollment_id])
+  	detail['enrollment_id'] = enrollment.id
   	detail['percentage'] = enrollment.percentage
   	detail['title'] = enrollment.course.title
   	detail['description'] = enrollment.course.description
     detail['url'] = enrollment.course.url
+    detail['advancements'] = []
+    enrollment.advancements.each do |a|
+    	a_hash = {}
+    	a_hash['timestamp'] = a.created_at.strftime('%D')
+    	a_hash['amount'] = a.amount
+    	detail['advancements'] << a_hash
+    end
+    detail['advancements'].reverse!
     # fake data - will be real in the future
-  	detail['advancements'] = [
-  		{'timestamp' => (Time.now - 10000).strftime('%D'), 'amount' => 3},
-  		{'timestamp' => (Time.now - 20000).strftime('%D'), 'amount' => 9},
-  		{'timestamp' => (Time.now - 40000).strftime('%D'), 'amount' => 12},
-  		{'timestamp' => (Time.now - 80000).strftime('%D'), 'amount' => 2},
-  		{'timestamp' => (Time.now - 160000).strftime('%D'), 'amount' => 7},
-  	]
   	detail['notes'] = [
   		{'timestamp' => (Time.now - 10000).strftime('%D'), 'text' => "I think I'm finally getting the hang of this!"},
   		{'timestamp' => (Time.now - 20000).strftime('%D'), 'text' => "Almost there ..."},

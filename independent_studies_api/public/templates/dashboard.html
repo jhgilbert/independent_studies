@@ -13,10 +13,15 @@
     </div>
 
     <!-- detailed view of user's progress on the selected learning resource -->
-    <div class="section notebook">
-        <h2><a href="{{notebookDetail.url}}">{{notebookDetail.title}} ({{notebookDetail.percentage}}%)</a></h2>
+    <div class="section notebook" style="position: relative;">
+        <div ng-show="advancementInProgress" style="position: relative; background-color: white; float: right; clear:both; width: 200px;">
+            <p style="float: right; margin-top: 0px; margin-bottom: 5px;"><input type="text" ng-model="advancementAmount" style="width: 30px;">%</p>
+        </div>
+        <div ng-hide="advancementInProgress" class="button" ng-click="advancementInProgress=true" style="width: 120px; text-align: center; float: right; clear: both;">update progress</div>
+        <div ng-show="advancementInProgress" class="button" ng-click="createAdvancement(notebookDetail.enrollment_id)" style="width: 120px; text-align: center; float: right; clear: both;">save</div>
+        <h2><a href="{{notebookDetail.url}}">{{notebookDetail.title}} - {{notebookDetail.percentage}}% completed</a></h2>
         <p>{{notebookDetail.description}}</p>
-        <h3 class="notebook-subhead">Recent Progress</h3>
+        <h3 class="notebook-subhead">Progress</h3>
         <ul>
             <li ng-repeat="item in notebookDetail.advancements">{{item.amount}}% on {{item.timestamp}}</li>
         </ul>
