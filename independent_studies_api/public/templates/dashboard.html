@@ -1,4 +1,4 @@
-<div ng-controller="dashCtrl" ng-show="sessionData.userIsLoggedIn">
+<div ng-controller="dashCtrl" ng-show="sessionData.userIsLoggedIn" style="position:relative;">
 
     <!-- column of progress bars -->
     <div>
@@ -35,7 +35,7 @@
             <p ng-show="notebookDetail.notes.length === 0">You haven't added any notes yet.</p>
             <div ng-repeat="post in notebookDetail.notes">
                 <p class="post-date">{{post.timestamp}}</p>
-                <p>{{post.text}}</p>
+                <div ng-bind-html-unsafe="post.text"></div>
                 <hr/>
             </div>
         </div>

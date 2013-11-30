@@ -48,6 +48,15 @@
 
 </head>
 <body>
+<div class="overlay" ng-show="uiControls.activeAlert"> </div>
+
+<div class="popup course-completed" ng-show="uiControls.graduationAlert">
+    <h3>Congratulations!</h3>
+    <p>You've completed a course. This course will no longer appear on your dashboard; to gloat over your achievements
+    properly, you'll need to visit your transcript page.</p>
+    <div class="popup-button" style="margin-left: 0px;" ng-click="uiControls.graduationAlert=false;uiControls.activeAlert=false">cool, thanks</div>
+</div>
+
 <!-- top nav -->
 <div class="section top-nav" ng-show="navControls.globalNavIsVisible">
     <div ng-show="sessionData.userIsLoggedIn" class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='dashboard'}" ng-click="navControls.selectedPanel='dashboard'"><a class="plain-link" href="#/dashboard">Dashboard</a></div>

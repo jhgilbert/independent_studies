@@ -12,6 +12,7 @@ independentStudies.config(['$routeProvider', function($routeProvider) {
 // Top-level controller
 function mainCtrl($scope, $http) {
     $scope.navControls = {selectedPanel: null, globalNavIsVisible: true};
+    $scope.uiControls = {activeAlert: false, graduationAlert: false};
     $scope.sessionData = {name: null, userIsLoggedIn: false};
     function refreshUserData() {
         $http.get('/sessions').success(function (data) {

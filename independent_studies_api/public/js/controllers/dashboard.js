@@ -2,7 +2,7 @@
 function dashCtrl($scope, $http) {
     $scope.navControls.selectedPanel = 'dashboard';
 
-    $scope.uiControls = {selectedNotebookItem: 0};
+    $scope.uiControls.selectedNotebookItem = 0;
 
 
     function buildProgressBars() {
@@ -64,6 +64,10 @@ function dashCtrl($scope, $http) {
     $scope.createAdvancement = function(enrollment_id) {
         $http.post('/advancements', {'advancement': {'enrollment_id': enrollment_id, 'amount': (parseInt($scope.advancementAmount) - $scope.notebookDetail.percentage)}}).success(function () {
             refreshNotebook();
+            if (parseInt($scope.advancementAmount) === 100) {
+                $scope.uiControls.activeAlert = true;
+                $scope.uiControls.graduationAlert = true;
+            }
         });
     };
 

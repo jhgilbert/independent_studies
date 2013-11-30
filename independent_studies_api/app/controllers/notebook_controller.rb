@@ -3,10 +3,15 @@ class NotebookController < ApplicationController
   	user = User.find(session[:id])
   	@response = {'notebook' => []}
   	user.enrollments.each do |e|
-  		e_hash = {}
-  		e_hash['id'] = e.id
-  		e_hash['title'] = e.course.title
-  		e_hash['percentage'] = e.percentage
+      # skip completed courses
+      if e.percentage == 100
+        next
+      else
+  		  e_hash = {}
+  		  e_hash['id'] = e.id
+  		  e_hash['title'] = e.course.title
+  		  e_hash['percentage'] = e.percentage
+      end
   		@response['notebook'] << e_hash
   	end
   	render json: @response
@@ -22,18 +27,17 @@ class NotebookController < ApplicationController
   	detail['description'] = enrollment.course.description
     detail['url'] = enrollment.course.url
     detail['advancements'] = []
-    enrollment.advancements.each do |a|
+    enrollment.advancements.order(:id).reverse.each do |a|
     	a_hash = {}
     	a_hash['timestamp'] = a.created_at.strftime('%D')
     	a_hash['amount'] = a.amount
     	detail['advancements'] << a_hash
     end
-    detail['advancements'].reverse!
     detail['notes'] = []
-    enrollment.notes.each do |n|
+    enrollment.notes.order(:id).reverse.each do |n|
     	n_hash = {}
     	n_hash['timestamp'] = n.created_at.strftime('%D')
-    	n_hash['text'] = n.text
+    	n_hash['text'] = n.text.gsub(/\n/, '<br />')
     	n_hash['title'] = n.title
     	detail['notes'] << n_hash
     end

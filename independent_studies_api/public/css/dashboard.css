@@ -133,13 +133,13 @@
 
 .note-save {
     float: right;
-    margin-top: 10px;
+    margin-top: 10px !important;
     margin-right: 10px;
 }
 
 .note-exit {
     float: right;
-    margin-top: 10px;
+    margin-top: 10px !important;
 }
 
 .note-field {
@@ -151,7 +151,7 @@
 
 .new-note {
     float: right;
-    margin-top: 10px;
+    margin-top: 10px !important;
 }
 
 .note-field-wrapper {
