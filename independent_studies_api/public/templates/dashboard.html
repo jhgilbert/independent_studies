@@ -1,38 +1,41 @@
 <div ng-controller="dashCtrl">
 
     <!-- column of progress bars -->
-    <div ng-hide="noteInProgress" class="progress-bars">
-        <div class="progress-section" ng-repeat="i in notebookIndex" ng-click="selectNotebookItem($index)" ng-class="{selectedResource: uiControls.selectedNotebookItem===$index}">
-            <div>
-                <div class="resource-header"><h4><span ng-bind="i.title"></span></h4></div>
+    <div>
+        <div ng-hide="noteInProgress" class="progress-bars">
+            <div class="progress-section" ng-repeat="i in notebookIndex" ng-click="selectNotebookItem($index)" ng-class="{selectedResource: uiControls.selectedNotebookItem===$index}">
+                <div>
+                    <div class="resource-header"><div class="resource-title" ng-bind="i.title"></div></div>
+                </div>
+                <div>
+                    <div class="done progress-unit" ng-repeat="unit in i.completedArray"></div><div class="to-go progress-unit" ng-repeat="unit in i.remainderArray"></div>
+                </div>
             </div>
-            <div style="clear: both;">
-                <div class="done progress-unit" ng-repeat="unit in i.completedArray"></div><div class="to-go progress-unit" ng-repeat="unit in i.remainderArray"></div>
+        </div>
+
+        <!-- detailed view of user's progress on the selected learning resource -->
+        <div ng-hide="noteInProgress" class="section notebook" style="position: relative;">
+            <div ng-show="advancementInProgress" style="position: relative; background-color: white; float: right; clear:both; width: 200px;">
+                <p style="float: right; margin-top: 0px; margin-bottom: 5px;"><input type="text" ng-model="advancementAmount" style="width: 30px;">%</p>
+            </div>
+            <div ng-hide="advancementInProgress" class="button" ng-click="advancementInProgress=true" style="width: 120px; text-align: center; float: right; clear: both;">update progress</div>
+            <div ng-show="advancementInProgress" class="button" ng-click="createAdvancement(notebookDetail.enrollment_id)" style="width: 120px; text-align: center; float: right; clear: both;">save</div>
+            <h2><a href="{{notebookDetail.url}}">{{notebookDetail.title}} - {{notebookDetail.percentage}}% completed</a></h2>
+            <p>{{notebookDetail.description}}</p>
+            <h3 class="notebook-subhead">Progress</h3>
+            <ul>
+                <li ng-repeat="item in notebookDetail.advancements">{{item.amount}}% on {{item.timestamp}}</li>
+            </ul>
+            <h3 class="notebook-subhead">Notes ({{notebookDetail.notes.length}})</h3>
+            <div style="float: right; margin-top: 10px;" class="button" ng-click="initNote(notebookDetail.enrollment_id)">new note</div>
+            <div ng-repeat="post in notebookDetail.notes">
+                <p class="post-date">{{post.timestamp}}</p>
+                <p>{{post.text}}</p>
+                <hr/>
             </div>
         </div>
     </div>
 
-    <!-- detailed view of user's progress on the selected learning resource -->
-    <div ng-hide="noteInProgress" class="section notebook" style="position: relative;">
-        <div ng-show="advancementInProgress" style="position: relative; background-color: white; float: right; clear:both; width: 200px;">
-            <p style="float: right; margin-top: 0px; margin-bottom: 5px;"><input type="text" ng-model="advancementAmount" style="width: 30px;">%</p>
-        </div>
-        <div ng-hide="advancementInProgress" class="button" ng-click="advancementInProgress=true" style="width: 120px; text-align: center; float: right; clear: both;">update progress</div>
-        <div ng-show="advancementInProgress" class="button" ng-click="createAdvancement(notebookDetail.enrollment_id)" style="width: 120px; text-align: center; float: right; clear: both;">save</div>
-        <h2><a href="{{notebookDetail.url}}">{{notebookDetail.title}} - {{notebookDetail.percentage}}% completed</a></h2>
-        <p>{{notebookDetail.description}}</p>
-        <h3 class="notebook-subhead">Progress</h3>
-        <ul>
-            <li ng-repeat="item in notebookDetail.advancements">{{item.amount}}% on {{item.timestamp}}</li>
-        </ul>
-        <h3 class="notebook-subhead">Notes ({{notebookDetail.notes.length}})</h3>
-        <div style="float: right; margin-top: 10px;" class="button" ng-click="initNote(notebookDetail.enrollment_id)">new note</div>
-        <div ng-repeat="post in notebookDetail.notes">
-            <p class="post-date">{{post.timestamp}}</p>
-            <p>{{post.text}}</p>
-            <hr/>
-        </div>
-    </div>
 
     <div style="background-color: white;" ng-show="noteInProgress">
         <div style="float: right; margin-top: 10px; margin-right: 10px;" ng-click="createNote()" class="button">save</div>
