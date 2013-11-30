@@ -2,7 +2,7 @@
 
     <!-- column of progress bars -->
     <div class="progress-bars">
-        <div class="progress-section" ng-repeat="i in notebookIndex" ng-click="uiControls.selectedNotebookItem=$index" ng-class="{selectedResource: uiControls.selectedNotebookItem===$index}">
+        <div class="progress-section" ng-repeat="i in notebookIndex" ng-click="selectNotebookItem($index)" ng-class="{selectedResource: uiControls.selectedNotebookItem===$index}">
             <div>
                 <div class="resource-header"><h4><span ng-bind="i.title"></span></h4></div>
             </div>

@@ -14,14 +14,26 @@ function dashCtrl($scope, $http) {
         }
     }
 
+    function getNotebookDetail(enrollment_id) {
+        $http.get('/notebook/detail?enrollment_id=' + enrollment_id).success(function (data){
+            $scope.notebookDetail = data.detail;
+        });
+    }
+
     function getNotebookIndex() {
         $http.get('/notebook/index').success(function (data) {
             $scope.notebookIndex = data.notebook;
+            getNotebookDetail($scope.notebookIndex[0]['id']);
             buildProgressBars();
         });
     }
 
     getNotebookIndex();
+
+    $scope.selectNotebookItem = function(index) {
+        $scope.uiControls.selectedNotebookItem = index;
+        getNotebookDetail($scope.notebookIndex[index]['id']);
+    }
 
     // PROGRESS BAR CREATION =======================================================================================
 
@@ -43,13 +55,8 @@ function dashCtrl($scope, $http) {
         return arr;
     }
 
-    // NOTEBOOK ====================================================================================================
-    function getNotebookDetail() {
-        $http.get('/notebook/detail?enrollment_id=1').success(function (data){
-            $scope.notebookDetail = data.detail;
-        });
-    }
 
-    getNotebookDetail();
+
+    getNotebookDetail($scope.note);
 
 }
