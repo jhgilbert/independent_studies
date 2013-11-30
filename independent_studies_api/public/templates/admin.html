@@ -54,14 +54,14 @@
     </div>
 
     <!-- detailed edit panel -->
-    <div class="section resource-manager" ng-show="uiControls.detailEditInProgress">
+    <div class="section resource-manager" style="padding: 20px; min-height: 500px;" ng-show="uiControls.detailEditInProgress">
         <form>
-            <h3>Edit "{{uiControls.formData.name}}"</h3>
-            <p>Name: <input type="text" ng-model="uiControls.formData.name" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
+            <h3>Edit "{{uiControls.formData.title}}"</h3>
+            <p>Name: <input type="text" ng-model="uiControls.formData.title" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
             <p>Difficulty: <input type="text" ng-model="uiControls.formData.url" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
             <p><input type="checkbox" ng-model="uiControls.formData.free" ng-change="uiControls.formData.hasUnsavedChanges=true"> This course is free</p>
             <p>Description:</p>
-            <textarea ng-model="uiControls.formData.description" ng-change="uiControls.formData.hasUnsavedChanges=true"></textarea>
+            <textarea style="width: 900px; height: 150px;" ng-model="uiControls.formData.description" ng-change="uiControls.formData.hasUnsavedChanges=true"></textarea>
             </p>
             <p>Tags: <span class="tag" ng-repeat="tag in uiControls.formData.tags" ng-bind="tag"></span></p>
             </p>

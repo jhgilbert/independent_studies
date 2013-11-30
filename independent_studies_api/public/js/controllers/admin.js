@@ -7,7 +7,7 @@ function adminCtrl($scope, $http) {
 
     function refreshCourses() {
         $http.get('/courses').success(function(data, status, headers, config) {
-            $scope.resources = data;
+            $scope.resources = data.courses;
         });
     }
 
