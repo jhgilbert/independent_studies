@@ -1,4 +1,6 @@
 IndependentStudiesApi::Application.routes.draw do
+  resources :advancements, :only => [:create]
+
   get "notebook/index"
   get "notebook/detail"
   resources :enrollments, :only => [:create]
