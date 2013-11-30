@@ -11,7 +11,7 @@ independentStudies.config(['$routeProvider', function($routeProvider) {
 
 // Top-level controller
 function mainCtrl($scope, $http) {
-    $scope.navControls = {selectedPanel: null};
+    $scope.navControls = {selectedPanel: null, globalNavIsVisible: true};
     $scope.sessionData = {name: null, userIsLoggedIn: false};
     $http.get('/sessions').success(function (data) {
         $scope.sessionData.name = data.name;

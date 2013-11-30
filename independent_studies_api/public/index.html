@@ -51,7 +51,7 @@
             font-family: 'Arial';
             font-size: 15px;
             margin: auto;
-            width: 960px;
+            max-width: 960px;
         }
 
         h1, h2, h3, h4 {
@@ -192,6 +192,7 @@
             margin-bottom: 2px;
             margin-top: 25px;
             color: white;
+            text-align: center;
             font-family: 'Roboto', sans-serif;
             font-weight: 500;
             text-transform: uppercase;
@@ -234,7 +235,7 @@
 </head>
 <body>
 <!-- top nav -->
-<div class="section top-nav">
+<div class="section top-nav" ng-show="globalNavIsVisible">
     <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='dashboard'}" ng-click="navControls.selectedPanel='dashboard'"><a class="plain-link" href="#/dashboard">Dashboard</a></div>
     <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='admin'}" ng-click="navControls.selectedPanel='admin'"><a class="plain-link" href="#/admin">Admin</a></div>
     <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='courses'}" ng-click="navControls.selectedPanel='courses'"><a class="plain-link" href="#/courses">Courses</a></div>

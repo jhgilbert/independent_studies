@@ -67,4 +67,27 @@ function dashCtrl($scope, $http) {
         });
     };
 
+    // INDIVIDUAL NOTES ================================================================================================
+
+    $scope.initNote = function (enrollment_id) {
+        $scope.navControls.globalNavIsVisible = false;
+        $scope.noteInProgress = {
+            'enrollment_id': enrollment_id,
+            'text': ""
+        }
+    };
+
+    $scope.createNote = function() {
+        $http.post('/notes', {'note': $scope.noteInProgress}).success(function(){
+            $scope.noteInProgress = null;
+            $scope.navControls.globalNavIsVisible = true;
+            refreshNotebook();
+        });
+    };
+
+    $scope.exitNote = function() {
+        $scope.noteInProgress = null;
+        $scope.navControls.globalNavIsVisible = true;
+    };
+
 }
