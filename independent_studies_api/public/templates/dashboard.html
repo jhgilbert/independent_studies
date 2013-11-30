@@ -23,11 +23,13 @@
             <h2><a href="{{notebookDetail.url}}">{{notebookDetail.title}} - {{notebookDetail.percentage}}% completed</a></h2>
             <p>{{notebookDetail.description}}</p>
             <h3 class="notebook-subhead">Progress</h3>
+            <p ng-show="notebookDetail.advancements.length === 0">You haven't made any progress on this course yet.</p>
             <ul>
                 <li ng-repeat="item in notebookDetail.advancements">{{item.amount}}% on {{item.timestamp}}</li>
             </ul>
             <h3 class="notebook-subhead">Notes ({{notebookDetail.notes.length}})</h3>
             <div style="float: right; margin-top: 10px;" class="button" ng-click="initNote(notebookDetail.enrollment_id)">new note</div>
+            <p ng-show="notebookDetail.notes.length === 0">You haven't added any notes yet.</p>
             <div ng-repeat="post in notebookDetail.notes">
                 <p class="post-date">{{post.timestamp}}</p>
                 <p>{{post.text}}</p>

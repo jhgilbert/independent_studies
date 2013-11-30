@@ -29,16 +29,14 @@ class NotebookController < ApplicationController
     	detail['advancements'] << a_hash
     end
     detail['advancements'].reverse!
-    # fake data - will be real in the future
-  	detail['notes'] = [
-  		{'timestamp' => (Time.now - 10000).strftime('%D'), 'text' => "I think I'm finally getting the hang of this!"},
-  		{'timestamp' => (Time.now - 20000).strftime('%D'), 'text' => "Almost there ..."},
-  		{'timestamp' => (Time.now - 40000).strftime('%D'), 'text' => "Learned some awesome new methods today!"},
-  		{'timestamp' => (Time.now - 80000).strftime('%D'), 'text' => "Someday I will see my friends and family again."},
-  		{'timestamp' => (Time.now - 160000).strftime('%D'), 'text' => "Hm, coding is sort of addictive."},
-  		{'timestamp' => (Time.now - 320000).strftime('%D'), 'text' => "Should I be alarmed if I don't understand any of this?"},
-  		{'timestamp' => (Time.now - 640000).strftime('%D'), 'text' => "About to get started. Hooray for coding journeys!"},
-  	]
+    detail['notes'] = []
+    enrollment.notes.each do |n|
+    	n_hash = {}
+    	n_hash['timestamp'] = n.created_at.strftime('%D')
+    	n_hash['text'] = n.text
+    	n_hash['title'] = n.title
+    	detail['notes'] << n_hash
+    end
   	@response = {}
   	@response['detail'] = detail
 
