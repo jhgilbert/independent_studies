@@ -177,7 +177,7 @@
         display: inline-block;
         vertical-align: top;
         padding: 15px 20px 15px 22px;
-        max-width: 730px;
+        max-width: 738px;
         border-radius: 0px 5px 5px 5px;
         margin-left: -2px;
     }
@@ -250,10 +250,10 @@
     <div ng-show="sessionData.userIsLoggedIn" class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='admin'}" ng-click="navControls.selectedPanel='admin'"><a class="plain-link" href="#/admin">Admin</a></div>
     <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='courses'}" ng-click="navControls.selectedPanel='courses'"><a class="plain-link" href="#/courses">Courses</a></div>
     <div ng-show="sessionData.userIsLoggedIn" class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='transcript'}" ng-click="navControls.selectedPanel='transcript'"><a class="plain-link" href="#/transcript">Transcript</a></div>
-    <div class="nav-link" ng-show="sessionData.userIsLoggedIn">
+    <div style="float: right;" class="nav-link" ng-show="sessionData.userIsLoggedIn">
         Hi, {{sessionData.name}} (<a href="javascript:" ng-click="logout()">log out</a>)
     </div>
-    <div class="nav-link" ng-hide="sessionData.userIsLoggedIn">
+    <div style="float: right;" class="nav-link" ng-hide="sessionData.userIsLoggedIn">
         <a class="janrainEngage" href="#">Sign In</a>
     </div>
 </div>
