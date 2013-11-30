@@ -1,4 +1,6 @@
 IndependentStudiesApi::Application.routes.draw do
+  resources :notes, :only => [:create]
+
   resources :advancements, :only => [:create]
 
   get "notebook/index"

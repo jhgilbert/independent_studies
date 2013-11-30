@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131130012151) do
+ActiveRecord::Schema.define(version: 20131130023127) do
 
   create_table "advancements", force: true do |t|
     t.integer  "amount"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 20131130012151) do
     t.integer  "percentage"
     t.integer  "user_id"
     t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notes", force: true do |t|
+    t.string   "title",         default: ""
+    t.text     "text"
+    t.integer  "enrollment_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
