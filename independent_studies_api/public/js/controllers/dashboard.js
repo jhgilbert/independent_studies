@@ -44,34 +44,12 @@ function dashCtrl($scope, $http) {
     }
 
     // NOTEBOOK ====================================================================================================
-
-    // This will be an API call for the student's full enrollment in a given resource.
-    function getResourceDetail() {
-        $scope.notebookResource = {
-            name: "Javascript class",
-            percentage: 42,
-            url: "http://www.javascript.com",
-            difficulty: 'beginner',
-            description: "Just another JS class. Nothing too special about it.",
-            code: [],
-            profile: null
-        };
-        $scope.notebookPosts = [
-            {date: "11/2/2013", text: "Man, this stuff is awesome!"},
-            {date: "8/4/2013", text: "Almost there ..."},
-            {date: "7/22/2013", text: "<xmp><p>I keep reminding myself that everyone has to start somewhere.</p></xmp>"},
-            {date: "5/17/2013", text: "Getting the hang of it, I think. :)"},
-            {date: "1/4/2013", text: "Time to start my JavaScript journey. I'm so excited! http://www.cnn.com"}
-        ];
-        $scope.recentProgress = [
-            {date: "11/2/2013", percentage: 2},
-            {date: "8/4/2013", percentage: 5},
-            {date: "7/22/2013", percentage: 2},
-            {date: "5/17/2013", percentage: 7},
-            {date: "1/4/2013", percentage: 3}
-        ];
+    function getNotebookDetail() {
+        $http.get('/notebook/detail?enrollment_id=1').success(function (data){
+            $scope.notebookDetail = data.detail;
+        });
     }
 
-    getResourceDetail();
+    getNotebookDetail();
 
 }

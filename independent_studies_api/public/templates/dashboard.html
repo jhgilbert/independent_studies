@@ -14,15 +14,15 @@
 
     <!-- detailed view of user's progress on the selected learning resource -->
     <div class="section notebook">
-        <h2><a href="{{notebookResource.url}}">{{notebookResource.name}} ({{notebookResource.percentage}}%)</a></h2>
-        <p>{{notebookResource.description}}</p>
+        <h2><a href="{{notebookDetail.url}}">{{notebookDetail.title}} ({{notebookDetail.percentage}}%)</a></h2>
+        <p>{{notebookDetail.description}}</p>
         <h3 class="notebook-subhead">Recent Progress</h3>
         <ul>
-            <li ng-repeat="item in recentProgress">{{item.percentage}}% on {{item.date}}</li>
+            <li ng-repeat="item in notebookDetail.advancements">{{item.amount}}% on {{item.timestamp}}</li>
         </ul>
         <h3 class="notebook-subhead">Notes</h3>
-        <div ng-repeat="post in notebookPosts">
-            <p class="post-date">{{post.date}}</p>
+        <div ng-repeat="post in notebookDetail.notes">
+            <p class="post-date">{{post.timestamp}}</p>
             <p>{{post.text}}</p>
             <hr/>
         </div>

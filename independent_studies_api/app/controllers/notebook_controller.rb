@@ -17,24 +17,25 @@ class NotebookController < ApplicationController
   	detail = {}
   	enrollment = Enrollment.find(params[:enrollment_id])
   	detail['percentage'] = enrollment.percentage
+  	detail['title'] = enrollment.course.title
   	detail['description'] = enrollment.course.description
-    
+    detail['url'] = enrollment.course.url
     # fake data - will be real in the future
   	detail['advancements'] = [
-  		{'timestamp' => (Time.now - 10000), 'amount' => nil},
-  		{'timestamp' => (Time.now - 20000), 'amount' => nil},
-  		{'timestamp' => (Time.now - 40000), 'amount' => nil},
-  		{'timestamp' => (Time.now - 80000), 'amount' => nil},
-  		{'timestamp' => (Time.now - 160000), 'amount' => nil},
+  		{'timestamp' => (Time.now - 10000).strftime('%D'), 'amount' => 3},
+  		{'timestamp' => (Time.now - 20000).strftime('%D'), 'amount' => 9},
+  		{'timestamp' => (Time.now - 40000).strftime('%D'), 'amount' => 12},
+  		{'timestamp' => (Time.now - 80000).strftime('%D'), 'amount' => 2},
+  		{'timestamp' => (Time.now - 160000).strftime('%D'), 'amount' => 7},
   	]
   	detail['notes'] = [
-  		{'timestamp' => (Time.now - 10000), 'text' => "I think I'm finally getting the hang of this!"},
-  		{'timestamp' => (Time.now - 20000), 'text' => "Almost there ..."},
-  		{'timestamp' => (Time.now - 40000), 'text' => "Learned some awesome new methods today!"},
-  		{'timestamp' => (Time.now - 80000), 'text' => "Someday I will see my friends and family again."},
-  		{'timestamp' => (Time.now - 160000), 'text' => "Hm, coding is sort of addictive."},
-  		{'timestamp' => (Time.now - 320000), 'text' => "Should I be alarmed if I don't understand any of this?"},
-  		{'timestamp' => (Time.now - 640000), 'text' => "About to get started. Hooray for coding journeys!"},
+  		{'timestamp' => (Time.now - 10000).strftime('%D'), 'text' => "I think I'm finally getting the hang of this!"},
+  		{'timestamp' => (Time.now - 20000).strftime('%D'), 'text' => "Almost there ..."},
+  		{'timestamp' => (Time.now - 40000).strftime('%D'), 'text' => "Learned some awesome new methods today!"},
+  		{'timestamp' => (Time.now - 80000).strftime('%D'), 'text' => "Someday I will see my friends and family again."},
+  		{'timestamp' => (Time.now - 160000).strftime('%D'), 'text' => "Hm, coding is sort of addictive."},
+  		{'timestamp' => (Time.now - 320000).strftime('%D'), 'text' => "Should I be alarmed if I don't understand any of this?"},
+  		{'timestamp' => (Time.now - 640000).strftime('%D'), 'text' => "About to get started. Hooray for coding journeys!"},
   	]
   	@response = {}
   	@response['detail'] = detail
