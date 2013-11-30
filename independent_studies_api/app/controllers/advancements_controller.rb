@@ -2,7 +2,10 @@ class AdvancementsController < ApplicationController
 	def create
 		@advancement = Advancement.new(advancement_params)
 		@advancement.save
-
+		e = @advancement.enrollment
+		e.percentage += @advancement.amount
+		e.save
+		
 		render json: @advancement
 	end
 
