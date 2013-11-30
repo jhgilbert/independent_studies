@@ -1,4 +1,5 @@
 class CoursesController < ApplicationController
+	before_filter :verify_admin_privileges, :only => [:create, :destroy, :update]
 
 	def index
 		@response = {}
@@ -34,6 +35,15 @@ class CoursesController < ApplicationController
 		@course = Course.find(params[:id])
 		@course.destroy!
 		render json: @course
+	end
+
+	protected
+	def verify_admin_privileges
+		if User.find(session[:id]).is_admin
+			return true
+		else
+			return false
+		end
 	end
 
 	private
