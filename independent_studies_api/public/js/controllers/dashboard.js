@@ -1,15 +1,27 @@
 // Dashboard controller
-function dashCtrl($scope) {
+function dashCtrl($scope, $http) {
     $scope.navControls.selectedPanel = 'dashboard';
 
-    $scope.uiControls = {selectedResourceIndex: null};
+    $scope.uiControls = {selectedNotebookItem: 0};
 
-    // For prototyping only -- will be provided by API
-    $scope.resources = [
-        {name: "UX class", percentage: 42},
-        {name: "JavaScript class", percentage: 23},
-        {name: "Security book", percentage: 98}
-    ];
+
+    function buildProgressBars() {
+        for (var i=0;i<$scope.notebookIndex.length;i++) {
+            $scope.notebookIndex[i].completedArray = buildCompletedArray($scope.notebookIndex[i]['percentage']);
+            $scope.notebookIndex[i].remainderArray = buildRemainderArray($scope.notebookIndex[i]['percentage']);
+            $scope.notebookIndex[i].displayPercentage = $scope.notebookIndex[i]['percentage'];
+            $scope.notebookIndex[i].updateInProgress = false;
+        }
+    }
+
+    function getNotebookIndex() {
+        $http.get('/notebook/index').success(function (data) {
+            $scope.notebookIndex = data.notebook;
+            buildProgressBars();
+        });
+    }
+
+    getNotebookIndex();
 
     // PROGRESS BAR CREATION =======================================================================================
 
@@ -30,28 +42,6 @@ function dashCtrl($scope) {
         }
         return arr;
     }
-
-    function buildProgressBars() {
-        for (var i=0;i<$scope.resources.length;i++) {
-            $scope.resources[i].completedArray = buildCompletedArray($scope.resources[i]['percentage']);
-            $scope.resources[i].remainderArray = buildRemainderArray($scope.resources[i]['percentage']);
-            $scope.resources[i].displayPercentage = $scope.resources[i]['percentage'];
-            $scope.resources[i].updateInProgress = false;
-        }
-    }
-
-    buildProgressBars();
-
-    // FORM CONTROLS ===============================================================================================
-
-    $scope.submitResourceForm = function() {
-        // post will go here
-        // get will go here
-        buildProgressBars();
-        for (var i=0;i<$scope.resources.length;i++) {
-            $scope.resources[i].updateInProgress = false;
-        }
-    };
 
     // NOTEBOOK ====================================================================================================
 

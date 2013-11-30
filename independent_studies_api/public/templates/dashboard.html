@@ -2,12 +2,12 @@
 
     <!-- column of progress bars -->
     <div class="progress-bars">
-        <div class="progress-section" ng-repeat="r in resources" ng-click="uiControls.selectedResourceIndex=$index" ng-class="{selectedResource: uiControls.selectedResourceIndex===$index}">
+        <div class="progress-section" ng-repeat="i in notebookIndex" ng-click="uiControls.selectedNotebookItem=$index" ng-class="{selectedResource: uiControls.selectedNotebookItem===$index}">
             <div>
-                <div class="resource-header"><h4><span ng-bind="r.name"></span></h4></div>
+                <div class="resource-header"><h4><span ng-bind="i.title"></span></h4></div>
             </div>
             <div style="clear: both;">
-                <div class="done progress-unit" ng-repeat="unit in r.completedArray"></div><div class="to-go progress-unit" ng-repeat="unit in r.remainderArray"></div>
+                <div class="done progress-unit" ng-repeat="unit in i.completedArray"></div><div class="to-go progress-unit" ng-repeat="unit in i.remainderArray"></div>
             </div>
         </div>
     </div>
