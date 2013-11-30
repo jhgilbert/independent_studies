@@ -5,7 +5,7 @@
             <p ng-bind="c.author"></p>
             <p ng-bind="c.description"></p>
             <p>Free? <span ng-bind="c.free"></span></p>
-            <div ng-hide="c.enrolled" class="button" ng-click="createEnrollment($index, c.id)">Enroll</button>
+            <div ng-show="sessionData.userIsLoggedIn && !c.enrolled" class="button" ng-click="createEnrollment($index, c.id)">Enroll</button>
         </div>
     </div>
 </div>

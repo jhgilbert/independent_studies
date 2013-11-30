@@ -27,11 +27,13 @@ class SessionsController < ApplicationController
   		current_user = new_user
   	end
   	session[:id] = current_user.id
-  	redirect_to root_url
+  	redirect_to "/"
   end
 
   def logout
   	session[:id] = nil
-    redirect_to root_url
+    @response = {'status' => 'success'}
+
+    render json: @response
   end
 end

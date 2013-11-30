@@ -18,7 +18,7 @@
         if (typeof window.janrain !== 'object') window.janrain = {};
         if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
 
-        janrain.settings.tokenUrl = '__REPLACE_WITH_YOUR_TOKEN_URL__';
+        janrain.settings.tokenUrl = 'http://localhost:3000/sessions';
 
         function isReady() { janrain.ready = true; };
         if (document.addEventListener) {
@@ -246,12 +246,12 @@
 <body>
 <!-- top nav -->
 <div class="section top-nav" ng-show="navControls.globalNavIsVisible">
-    <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='dashboard'}" ng-click="navControls.selectedPanel='dashboard'"><a class="plain-link" href="#/dashboard">Dashboard</a></div>
-    <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='admin'}" ng-click="navControls.selectedPanel='admin'"><a class="plain-link" href="#/admin">Admin</a></div>
+    <div ng-show="sessionData.userIsLoggedIn" class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='dashboard'}" ng-click="navControls.selectedPanel='dashboard'"><a class="plain-link" href="#/dashboard">Dashboard</a></div>
+    <div ng-show="sessionData.userIsLoggedIn" class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='admin'}" ng-click="navControls.selectedPanel='admin'"><a class="plain-link" href="#/admin">Admin</a></div>
     <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='courses'}" ng-click="navControls.selectedPanel='courses'"><a class="plain-link" href="#/courses">Courses</a></div>
-    <div class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='transcript'}" ng-click="navControls.selectedPanel='transcript'"><a class="plain-link" href="#/transcript">Transcript</a></div>
+    <div ng-show="sessionData.userIsLoggedIn" class="nav-link" ng-class="{selectedPill: navControls.selectedPanel==='transcript'}" ng-click="navControls.selectedPanel='transcript'"><a class="plain-link" href="#/transcript">Transcript</a></div>
     <div class="nav-link" ng-show="sessionData.userIsLoggedIn">
-        Hi, {{sessionData.name}} (<a href="/sessions/logout">log out</a>)
+        Hi, {{sessionData.name}} (<a href="javascript:" ng-click="logout()">log out</a>)
     </div>
     <div class="nav-link" ng-hide="sessionData.userIsLoggedIn">
         <a class="janrainEngage" href="#">Sign In</a>

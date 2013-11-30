@@ -13,12 +13,25 @@ independentStudies.config(['$routeProvider', function($routeProvider) {
 function mainCtrl($scope, $http) {
     $scope.navControls = {selectedPanel: null, globalNavIsVisible: true};
     $scope.sessionData = {name: null, userIsLoggedIn: false};
-    $http.get('/sessions').success(function (data) {
-        $scope.sessionData.name = data.name;
-        if ($scope.sessionData.name !== null) {
-            $scope.sessionData.userIsLoggedIn = true;
-        }
-    });
+    function refreshUserData() {
+        $http.get('/sessions').success(function (data) {
+            $scope.sessionData.name = data.name;
+            if ($scope.sessionData.name !== null) {
+                $scope.sessionData.userIsLoggedIn = true;
+            } else {
+                $scope.sessionData.userIsLoggedIn = false;
+            }
+        });
+    }
+
+    refreshUserData();
+
+    $scope.logout = function() {
+        $http.get('sessions/logout').success(function(){
+            refreshUserData();
+        });
+    };
+
 }
 
 
