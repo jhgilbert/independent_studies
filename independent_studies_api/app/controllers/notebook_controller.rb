@@ -2,16 +2,14 @@ class NotebookController < ApplicationController
   def index
   	user = User.find(session[:id])
   	@response = {'notebook' => []}
+    puts user.enrollments
   	user.enrollments.each do |e|
       # skip completed courses
-      if e.percentage == 100
-        next
-      else
-  		  e_hash = {}
-  		  e_hash['id'] = e.id
-  		  e_hash['title'] = e.course.title
-  		  e_hash['percentage'] = e.percentage
-      end
+      next if e.percentage == 100
+  		e_hash = {}
+  		e_hash['id'] = e.id
+  		e_hash['title'] = e.course.title
+  		e_hash['percentage'] = e.percentage
   		@response['notebook'] << e_hash
   	end
   	render json: @response

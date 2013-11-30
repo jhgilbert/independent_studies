@@ -1,7 +1,11 @@
 <div ng-controller="dashCtrl" ng-show="sessionData.userIsLoggedIn" style="position:relative;">
 
+    <div class="section" style="padding: 10px;" ng-show="notebookIndex.length === 0">
+        There's nothing here yet. <a href="#/courses">Go enroll</a> in some courses!
+    </div>
+
     <!-- column of progress bars -->
-    <div>
+    <div ng-show="notebookIndex.length > 0">
         <div ng-hide="noteInProgress" class="progress-bars">
             <div class="progress-section" ng-repeat="i in notebookIndex" ng-click="selectNotebookItem($index)" ng-class="{selectedResource: uiControls.selectedNotebookItem===$index}">
                 <div>

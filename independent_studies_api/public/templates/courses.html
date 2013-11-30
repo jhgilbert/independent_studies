@@ -1,12 +1,13 @@
 <div ng-controller="coursesCtrl">
     <div class="section">
         <div ng-repeat="c in courses" style="border: 1px solid black; padding: 15px;">
-            {{c}}
-            <p ng-bind="c.title"></p>
+            <p><a href="{{c.url}}"<span ng-bind="c.title"></span></a></p>
             <p ng-bind="c.author"></p>
             <p ng-bind="c.description"></p>
-            <p>Free? <span ng-bind="c.free"></span></p>
-            <div ng-show="sessionData.userIsLoggedIn && !enrollmentKey[c.id]" class="button" ng-click="createEnrollment($index, c.id)">Enroll</button>
+            <p>Difficulty level: <span ng-bind="c.difficulty"></span></p>
+            <p ng-show="c.free">This course is free.</p>
+            <div style="float: right;" ng-show="sessionData.userIsLoggedIn && !enrollmentKey[c.id]" class="button" ng-click="createEnrollment($index, c.id)">Enroll</div>
+            <br style="clear: both;" />
         </div>
     </div>
 </div>

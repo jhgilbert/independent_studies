@@ -8,10 +8,7 @@ class CoursesController < ApplicationController
 			user = User.find(session[:id])
 			courses.each do |c|
 				if user.courses.include?(c)
-					# suppress courses the user is already enrolled in
-					courses.delete!(c)
-					# alternatively, inform the UI which courses the user is enrolled in
-					# enrollment_key[c.id] = true
+					enrollment_key[c.id] = true
 				end
 			end
 		end
