@@ -25,8 +25,10 @@ function dashCtrl($scope, $http) {
         $http.get('/notebook/index').success(function (data) {
             $scope.advancementInProgress = false;
             $scope.notebookIndex = data.notebook;
-            getNotebookDetail($scope.notebookIndex[$scope.uiControls.selectedNotebookItem]['id']);
-            buildProgressBars();
+            if ($scope.notebookIndex.length > 0){
+                getNotebookDetail($scope.notebookIndex[$scope.uiControls.selectedNotebookItem]['id']);
+                buildProgressBars();
+            }
         });
     }
 
