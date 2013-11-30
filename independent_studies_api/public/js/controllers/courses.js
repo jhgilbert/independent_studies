@@ -11,7 +11,7 @@ function coursesCtrl($scope, $http) {
 
     $scope.createEnrollment = function(index, course_id) {
         $http.post('/enrollments', {'enrollment': { 'course_id': course_id}}).success(function (){
-           $scope.courses[index].enrolled = true;
+            $scope.courses[index].enrolled = true;
         });
     };
 }
