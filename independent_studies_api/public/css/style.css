@@ -1,0 +1,70 @@
+body {
+    background-image: url("../img/stripe.png");
+    background-color: #0b2c3c;
+    font-family: 'Arial';
+    font-size: 15px;
+    margin: auto;
+    max-width: 960px;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Orienta';
+}
+
+a {
+    text-decoration: none;
+    color: #ff6666;
+}
+
+td {
+    padding: 0px 10px 5px 10px;
+}
+
+.float-right {
+    float: right;
+}
+
+.section {
+    background-color: white;
+}
+
+.button {
+    display: inline-block;
+    padding: 5px;
+    background-color: #0b2c3c;
+    color: white;
+    border-radius: 5px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin: 0px 5px 0px 5px;
+    font-family: 'Orienta';
+    cursor: pointer;
+}
+
+/* nav */
+.top-nav {
+    padding: 10px;
+    border-radius: 0px 0px 5px 5px;
+    margin-bottom: 15px;
+}
+
+.nav-link {
+    display: inline-block;
+    cursor: pointer;
+    color: #024160;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding: 5px;
+}
+
+.plain-link {
+    color: inherit;
+    font-weight: inherit;
+}
+
+.selectedPill {
+    color: white !important;
+    font-weight: bold;
+    background-color: #ff6666;
+    border-radius: 5px;
+}
