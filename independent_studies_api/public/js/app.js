@@ -20,6 +20,7 @@ function mainCtrl($scope, $http) {
             $scope.sessionData.userIsAdmin = data.admin;
             if ($scope.sessionData.name !== null) {
                 $scope.sessionData.userIsLoggedIn = true;
+                $scope.sessionData.userName = data.fullName;
             } else {
                 $scope.sessionData.userIsLoggedIn = false;
             }

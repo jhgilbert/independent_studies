@@ -7,12 +7,8 @@ class SessionsController < ApplicationController
   		@response = {"name" => nil}
   	else
       user = User.find(session[:id])
-      # May expand this a bit later
-      puts "***********************************"
-      puts "User ID is #{session[:id]}"
-      puts "User is #{user.attributes}"
-      puts "***********************************"
-      @response = {"name" => user.first_name, "admin" => user.is_admin}
+      fullName = user.first_name + " " + user.last_name
+      @response = {"name" => user.first_name, "admin" => user.is_admin, "fullName" => fullName}
   	end
   	render json: @response
   end

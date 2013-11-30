@@ -1,3 +1,8 @@
-<div class="section" ng-show="sessionData.userIsLoggedIn">
-    This will be the transcript page, but there's nothing here yet. Sorry!
+<div class="section" style="padding: 5px 10px 0px 10px;" ng-show="sessionData.userIsLoggedIn" ng-controller="transcriptCtrl">
+    <h2>Transcript for <span ng-bind="sessionData.userName"></span></h2>
+    <div ng-repeat="course in transcript" style="padding: 5px 10px 10px 10px;">
+        <h3 ng-bind="course.title"></h3>
+        <p ng-bind="course.date"></p>
+        <hr />
+    </div>
 </div>
