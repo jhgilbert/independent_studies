@@ -131,30 +131,7 @@
     float: right;
 }
 
-.note-save {
-    float: right;
-    margin-top: 10px !important;
-    margin-right: 10px;
-}
-
-.note-exit {
-    float: right;
-    margin-top: 10px !important;
-}
-
-.note-field {
-    width: 954px;
-    height: 500px;
-    border: none;
-    clear:both;
-}
-
 .new-note {
     float: right;
     margin-top: 10px !important;
-}
-
-.note-field-wrapper {
-    background-color: white;
-    margin-top: 20px;
 }

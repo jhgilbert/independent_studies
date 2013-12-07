@@ -35,7 +35,7 @@
                 <li ng-repeat="item in notebookDetail.advancements">{{item.amount}}% on {{item.timestamp}}</li>
             </ul>
             <h3 class="notebook-subhead">Notes ({{notebookDetail.notes.length}})</h3>
-            <div class="button new-note" ng-click="initNote(notebookDetail.enrollment_id)">new note</div>
+            <a href="pages/notebook.html?enrollment_id={{notebookDetail.enrollment_id}}" class="button new-note">new note</a>
             <p ng-show="notebookDetail.notes.length === 0">You haven't added any notes yet.</p>
             <div ng-repeat="post in notebookDetail.notes">
                 <p class="post-date">{{post.timestamp}}</p>
@@ -45,12 +45,4 @@
         </div>
     </div>
 
-
-    <div class="note-field-wrapper" ng-show="noteInProgress">
-        <div ng-click="createNote()" class="button note-save">save</div>
-        <div ng-click="exitNote()" class="button note-exit">exit</div>
-        <div>
-            <textarea ng-model="noteInProgress.text" class="note-field"></textarea>
-        </div>
-    </div>
 </div>

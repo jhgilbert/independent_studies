@@ -7,6 +7,15 @@ class NotesController < ApplicationController
 		render json: @note
 	end
 
+	def update
+		@note = Note.find(params[:id])
+		puts "note is #{@note}"
+		@note.text = params[:note][:text]
+		@note.save
+
+		render json: @note
+	end
+
 	private
 
 	def note_params

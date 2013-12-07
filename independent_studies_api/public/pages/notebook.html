@@ -13,28 +13,57 @@
     </style>
 </head>
 <body>
-<div></div>
+<a href="/#/dashboard">Back to dashboard</a>
 <div id="editor"></div>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://cdn.jsdelivr.net/ace/1.1.01/min/ace.js" type="text/javascript" charset="utf-8"></script>
 <script>
-    var saveInProgress = false;
+    var noteID = null;
     var editor = ace.edit("editor");
     editor.getSession().setUseWrapMode(true);
-    // editor.setTheme("ace/theme/monokai");
-    // editor.getSession().setMode("ace/mode/javascript");
+
+    // Read a given param value
+    function getUrlVar(key){
+        var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
+        return result && decodeURI(result[1]) || "";
+    }
+
+    function saveNote() {
+        var noteData = {
+            note: {
+                enrollment_id: parseInt(getUrlVar('enrollment_id')),
+                text: editor.getValue()
+            }
+        };
+
+        var endpoint = (noteID) ? ("/notes/" + noteID) : "/notes";
+        var method = (noteID) ? "PUT" : "POST";
+
+        $.ajax({
+            url: endpoint,
+            type: method,
+            data: noteData
+        }).done(function(data) {
+            if (!noteID) {
+                noteID = data.id;
+            }
+            okToSave = true;
+        });
+    }
+
+    var okToSave = true;
+
+    // Save every 20 seconds if user is actively editing the text
     editor.on("change", function(){
-        console.log("Text has changed!");
-        if (saveInProgress) {
-            return true;
+        if (okToSave) {
+            okToSave = false;
+            setTimeout(function (){
+                saveNote();
+            }, 20000);
         }
         else {
-            console.log("We would save right here!");
-            saveInProgress = true;
-            setTimeout(function (){
-                saveInProgress = false;
-                console.log("Save in progress is back to false.")
-            }, 10000);
+            return true;
         }
     });
 </script>

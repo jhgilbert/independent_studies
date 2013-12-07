@@ -35,7 +35,7 @@ class NotebookController < ApplicationController
     enrollment.notes.order(:id).reverse.each do |n|
     	n_hash = {}
     	n_hash['timestamp'] = n.created_at.strftime('%D')
-    	n_hash['text'] = n.text.gsub(/\n/, '<br />')
+    	n_hash['text'] = n.text
     	n_hash['title'] = n.title
     	detail['notes'] << n_hash
     end
