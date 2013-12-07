@@ -37,6 +37,7 @@ class NotebookController < ApplicationController
     	n_hash['timestamp'] = n.created_at.strftime('%D')
     	n_hash['text'] = n.text
     	n_hash['title'] = n.title
+      n_hash['id'] = n.id
     	detail['notes'] << n_hash
     end
   	@response = {}

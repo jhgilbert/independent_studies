@@ -1,5 +1,5 @@
 IndependentStudiesApi::Application.routes.draw do
-  resources :notes, :only => [:create, :update]
+  resources :notes, :only => [:create, :update, :show]
 
   resources :advancements, :only => [:create]
 

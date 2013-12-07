@@ -37,9 +37,9 @@
             <h3 class="notebook-subhead">Notes ({{notebookDetail.notes.length}})</h3>
             <a href="pages/notebook.html?enrollment_id={{notebookDetail.enrollment_id}}" class="button new-note">new note</a>
             <p ng-show="notebookDetail.notes.length === 0">You haven't added any notes yet.</p>
-            <div ng-repeat="post in notebookDetail.notes">
-                <p class="post-date">{{post.timestamp}}</p>
-                <div ng-bind-html-unsafe="post.text"></div>
+            <div ng-repeat="note in notebookDetail.notes">
+                <p class="post-date">{{note.timestamp}} - <a href="/pages/notebook.html?note_id={{note.id}}">edit this note</a></p>
+                <div ng-bind="note.text"></div>
                 <hr/>
             </div>
         </div>

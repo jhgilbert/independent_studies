@@ -1,4 +1,10 @@
 class NotesController < ApplicationController
+	def show
+		@note = Note.find(params[:id])
+
+		render json: @note
+	end
+
 	def create
 		@note = Note.new(note_params)
 		@note.user_id = session[:id]
