@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Notebook</title>
+    <style type="text/css" media="screen">
+        #editor {
+            position: absolute;
+            top: 30px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+<div id="editor"></div>
+
+<script src="http://cdn.jsdelivr.net/ace/1.1.01/min/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.getSession().setUseWrapMode(true);
+    // editor.setTheme("ace/theme/monokai");
+    // editor.getSession().setMode("ace/mode/javascript");
+    editor.on("change", function(){
+        console.log("Text has changed!");
+    });
+</script>
+</body>
+</html>
