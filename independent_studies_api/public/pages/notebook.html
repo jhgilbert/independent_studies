@@ -18,12 +18,24 @@
 
 <script src="http://cdn.jsdelivr.net/ace/1.1.01/min/ace.js" type="text/javascript" charset="utf-8"></script>
 <script>
+    var saveInProgress = false;
     var editor = ace.edit("editor");
     editor.getSession().setUseWrapMode(true);
     // editor.setTheme("ace/theme/monokai");
     // editor.getSession().setMode("ace/mode/javascript");
     editor.on("change", function(){
         console.log("Text has changed!");
+        if (saveInProgress) {
+            return true;
+        }
+        else {
+            console.log("We would save right here!");
+            saveInProgress = true;
+            setTimeout(function (){
+                saveInProgress = false;
+                console.log("Save in progress is back to false.")
+            }, 10000);
+        }
     });
 </script>
 </body>
