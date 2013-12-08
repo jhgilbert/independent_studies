@@ -41,7 +41,7 @@ function dashCtrl($scope, $http) {
                     },
                     yAxis: {
                         title: {
-                            text: 'Percent completed'
+                            text: 'Progress made (in %)'
                         },
                         min: 0
                     },
