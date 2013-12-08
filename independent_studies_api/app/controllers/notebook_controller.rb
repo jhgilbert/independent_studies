@@ -25,11 +25,11 @@ class NotebookController < ApplicationController
   	detail['description'] = enrollment.course.description
     detail['url'] = enrollment.course.url
     detail['advancements'] = []
-    enrollment.advancements.order(:id).reverse.each do |a|
-    	a_hash = {}
-    	a_hash['timestamp'] = a.created_at.strftime('%D')
-    	a_hash['amount'] = a.amount
-    	detail['advancements'] << a_hash
+    enrollment.advancements.each do |a|
+      set = []
+      set << a.created_at.to_i * 1000 # convert to milliseconds for JS use
+      set << a.amount
+      detail['advancements'] << set
     end
     detail['notes'] = []
     enrollment.notes.order(:id).reverse.each do |n|

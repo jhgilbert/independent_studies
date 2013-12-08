@@ -15,9 +15,49 @@ function dashCtrl($scope, $http) {
     }
 
     function getNotebookDetail(enrollment_id) {
+        if (!enrollment_id) {
+            return true;
+        }
         $http.get('/notebook/detail?enrollment_id=' + enrollment_id).success(function (data){
             $scope.notebookDetail = data.detail;
             $scope.advancementAmount = $scope.notebookDetail.percentage;
+            $(function () {
+                $('#progressChart').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: ''
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        dateTimeLabelFormats: {
+                            month: '%b',
+                            year: '%Y'
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Percent completed'
+                        },
+                        min: 0
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return Highcharts.dateFormat('%b %d %Y', this.x) +': '+ this.y +'%';
+                        }
+                    },
+
+                    series: [{
+                        showInLegend: false,
+                        name: '',
+                        data: $scope.notebookDetail.advancements
+                    }]
+                });
+            });
         });
     }
 
