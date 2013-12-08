@@ -18,7 +18,7 @@
         </div>
 
         <!-- detailed view of user's progress on the selected learning resource -->
-        <div ng-hide="noteInProgress" class="section notebook">
+        <div ng-hide="noteInProgress" class="section notebook" style="width: 740px;">
 
             <!-- PROGRESS UPDATE DIV -->
             <div ng-show="advancementInProgress" class="advancement-form">
@@ -32,8 +32,6 @@
 
             <!-- COURSE INFO -->
             <h2><a href="{{notebookDetail.url}}">{{notebookDetail.title}} - {{notebookDetail.percentage}}% completed</a></h2>
-            <p>{{notebookDetail.description}}</p>
-            <h3 class="notebook-subhead">Progress</h3>
             <p ng-show="notebookDetail.advancements.length === 0">You haven't made any progress on this course yet.</p>
 
             <!-- PROGRESS CHART -->

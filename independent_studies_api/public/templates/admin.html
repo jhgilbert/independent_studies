@@ -12,7 +12,7 @@
                 <td class="table-header">Description</td>
                 <td class="table-header">Action</td>
             </tr>
-            <tr ng-repeat="r in resources">
+            <tr ng-repeat="r in resources" ng-click="selectRow($index)">
                 <td><input type="text" ng-model="r.title" ng-change="r.hasUnsavedChanges=true"></td>
                 <td><input type="text" ng-model="r.url" ng-change="r.hasUnsavedChanges=true"></td>
                 <td><input type="text" ng-model="r.difficulty" ng-change="r.hasUnsavedChanges=true"></td>
@@ -71,7 +71,7 @@
                     <button type="submit" ng-click="uiControls.formData.tags.push(newTag); resetTagForms(); uiControls.formData.hasUnsavedChanges=true">Submit</button>
                 </span>
             </p>
-            <div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="updateResource()">Save Changes</div>
+            <div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="updateResource(selectedRow)">Save Changes</div>
         </form>
     </div>
 
