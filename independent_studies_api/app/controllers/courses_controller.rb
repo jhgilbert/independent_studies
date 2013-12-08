@@ -2,8 +2,32 @@ class CoursesController < ApplicationController
 	before_filter :verify_admin_privileges, :only => [:create, :destroy, :update]
 
 	def index
+		# TODO: Admin and the course listing need different things ... may be 
+		# worth splitting into two routes to speed up both types of requests
+
 		@response = {}
-		courses = Course.all
+		courses = Course.preload(:tags).load
+		@courses = []
+		puts "Courses is #{courses}"
+		courses.each do |c|
+			# restrict matches to desired tags
+			match_failed = false
+			if params[:tags]
+				params[:tags].each do |t|
+					tag = Tag.find_by_text(t)
+					match_failed = true unless c.tags.include?(tag)
+				end
+			end
+			next if match_failed
+			# add tags into returned data - only really needed for admin
+			course_info = c.attributes # TODO: Method is expensive ... is there a better way?
+			course_info['tags'] = []
+			c.tags.each do |t|
+				course_info['tags'] << t.text
+			end
+		    @courses << course_info
+		    puts course_info
+		end
 		enrollment_key = {}
 		if session[:id] != nil
 			user = User.find(session[:id])
@@ -13,7 +37,7 @@ class CoursesController < ApplicationController
 				end
 			end
 		end
-		@response['courses'] = courses
+		@response['courses'] = @courses
 		@response['enrollment_key'] = enrollment_key
 		render json: @response
 	end
