@@ -19,6 +19,8 @@
 
         <!-- detailed view of user's progress on the selected learning resource -->
         <div ng-hide="noteInProgress" class="section notebook">
+
+            <!-- PROGRESS UPDATE DIV -->
             <div ng-show="advancementInProgress" class="advancement-form">
                 <p>
                     <input type="text" ng-model="advancementAmount" style="width: 30px;">%
@@ -27,12 +29,18 @@
             <div ng-hide="advancementInProgress" class="button advancement-update" ng-click="advancementInProgress=true">update progress</div>
             <div ng-show="advancementInProgress" class="button advancement-save" ng-click="createAdvancement(notebookDetail.enrollment_id)">save</div>
             <div ng-show="advancementInProgress" class="button advancement-cancel" ng-click="advancementInProgress=false">cancel</div>
+
+            <!-- COURSE INFO -->
             <h2><a href="{{notebookDetail.url}}">{{notebookDetail.title}} - {{notebookDetail.percentage}}% completed</a></h2>
             <p>{{notebookDetail.description}}</p>
             <h3 class="notebook-subhead">Progress</h3>
             <p ng-show="notebookDetail.advancements.length === 0">You haven't made any progress on this course yet.</p>
+
+            <!-- PROGRESS CHART -->
             <div id="progressChart" ng-show="notebookDetail.advancements.length !== 0" style="height: 150px; margin-top: 30px; width: 730px;">
             </div>
+
+            <!-- NOTES SECTION -->
             <h3 class="notebook-subhead">Notes ({{notebookDetail.notes.length}})</h3>
             <a href="pages/notebook.html?enrollment_id={{notebookDetail.enrollment_id}}" class="button new-note">new note</a>
             <p ng-show="notebookDetail.notes.length === 0">You haven't added any notes yet.</p>

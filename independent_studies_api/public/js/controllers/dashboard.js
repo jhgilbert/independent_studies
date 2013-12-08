@@ -55,7 +55,11 @@ function dashCtrl($scope, $http) {
                             return Highcharts.dateFormat('%b %d %Y', this.x) +': '+ this.y +'%';
                         }
                     },
-
+                    plotOptions: {
+                        column: {
+                            color: '#1eb69b'
+                        }
+                    },
                     series: [{
                         showInLegend: false,
                         name: '',
