@@ -35,7 +35,12 @@ function dashCtrl($scope, $http) {
                     xAxis: {
                         type: 'datetime',
                         dateTimeLabelFormats: {
-                            month: '%b',
+                            millisecond: '%b %d',
+                            second: '%b %d %H:%M',
+                            minute: '%m/%d %H:%M',
+                            hour: '%m/%d %H:%M',
+                            day: '%b %d',
+                            month: '%b %Y',
                             year: '%Y'
                         }
                     },
