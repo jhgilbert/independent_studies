@@ -12,8 +12,9 @@ class CoursesController < ApplicationController
 		courses.each do |c|
 			# restrict matches to desired tags
 			match_failed = false
+			puts "Params tags is #{params[:tags]}"
 			if params[:tags]
-				params[:tags].each do |t|
+				params[:tags].split.each do |t|
 					tag = Tag.find_by_text(t)
 					match_failed = true unless c.tags.include?(tag)
 				end
