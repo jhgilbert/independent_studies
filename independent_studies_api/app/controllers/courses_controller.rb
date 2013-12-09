@@ -8,13 +8,11 @@ class CoursesController < ApplicationController
 		@response = {}
 		courses = Course.preload(:tags).load
 		@courses = []
-		puts "Courses is #{courses}"
 		courses.each do |c|
 			# restrict matches to desired tags
 			match_failed = false
-			puts "Params tags is #{params[:tags]}"
 			if params[:tags]
-				params[:tags].split.each do |t|
+				params[:tags].split(',').each do |t|
 					tag = Tag.find_by_text(t)
 					match_failed = true unless c.tags.include?(tag)
 				end
@@ -27,7 +25,6 @@ class CoursesController < ApplicationController
 				course_info['tags'] << t.text
 			end
 		    @courses << course_info
-		    puts course_info
 		end
 		enrollment_key = {}
 		if session[:id] != nil
@@ -66,7 +63,6 @@ class CoursesController < ApplicationController
 		@course.tag_associations.each do |ta|
 			ta.destroy!
 		end
-		puts "params[:course][:tags] is #{course_params[:tags]}"
 		params[:course][:tags].each do |t|
 			tag = Tag.find_by_text(t)
 			if tag == nil

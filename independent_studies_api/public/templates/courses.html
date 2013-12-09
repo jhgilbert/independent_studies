@@ -1,5 +1,68 @@
 <div ng-controller="coursesCtrl">
     <div class="section">
+        <h3>Search courses</h3>
+        <form>
+            <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                Language<br />
+                <input type="radio" ng-model="langTag" value="any"> any <br />
+                <input type="radio" ng-model="langTag" value="Ruby"> Ruby <br />
+                <input type="radio" ng-model="langTag" value="JavaScript"> JavaScript <br />
+                <input type="radio" ng-model="langTag" value="Python"> Python <br />
+                <input type="radio" ng-model="langTag" value="Python"> PHP <br />
+                <input type="radio" ng-model="langTag" value="HTML/CSS"> HTML/CSS <br />
+                <input type="radio" ng-model="langTag" value=""> Linux Shell <br />
+            </div>
+            <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                Difficulty<br />
+                <input type="radio" ng-model="difficultyTag" value="any"> any<br />
+                <input type="radio" ng-model="difficultyTag" value="n00b"> n00b<br />
+                <input type="radio" ng-model="difficultyTag" value="beginner"> beginner <br />
+                <input type="radio" ng-model="difficultyTag" value="intermediate"> intermediate <br />
+                <input type="radio" ng-model="difficultyTag" value="advanced"> advanced <br />
+            </div>
+            <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                Cost<br />
+                <input type="radio" ng-model="costTag" value="any"> any<br />
+                <input type="radio" ng-model="costTag" value="free"> free<br />
+                <input type="radio" ng-model="costTag" value="budget-friendly"> budget-friendly <br />
+                <input type="radio" ng-model="costTag" value="pricey"> pricey <br />
+            </div>
+            <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                Library/Framework<br />
+                <p ng-show="langTag === 'any'"><em>Choose a language</em></p>
+                <div ng-show="langTag === 'Ruby'">
+                    <input type="radio" ng-model="frameworkTag" value="any"> any<br />
+                    <input type="radio" ng-model="frameworkTag" value="Sinatra"> Sinatra<br />
+                    <input type="radio" ng-model="frameworkTag" value="Rails"> Rails<br />
+                    <input type="radio" ng-model="frameworkTag" value="Rails API"> Rails API<br />
+                </div>
+                <div ng-show="langTag === 'Python'">
+                    <input type="radio" ng-model="frameworkTag" value="any"> any<br />
+                    <input type="radio" ng-model="frameworkTag" value="Django"> Django<br />
+                    <input type="radio" ng-model="frameworkTag" value="Django"> Flask<br />
+                </div>
+                <div ng-show="langTag === 'JavaScript'">
+                    <input type="radio" ng-model="frameworkTag" value="any"> any<br />
+                    <input type="radio" ng-model="frameworkTag" value="jQuery"> jQuery<br />
+                    <input type="radio" ng-model="frameworkTag" value="AngularJS"> AngularJS<br />
+                    <input type="radio" ng-model="frameworkTag" value="AngularJS"> Backbone.js<br />
+                    <input type="radio" ng-model="frameworkTag" value="AngularJS"> Ember<br />
+                </div>
+                <div ng-show="langTag === 'PHP'">
+                    <input type="radio" ng-model="frameworkTag" value="Cake"> CakePHP<br />
+                </div>
+            </div>
+            <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                Additional topic filter<br />
+                <input type="radio" ng-model="topicTag" value="any"> any<br />
+                <input type="radio" ng-model="topicTag" value="free"> algorithms<br />
+                <input type="radio" ng-model="topicTag" value="budget-friendly"> security<br />
+                <input type="radio" ng-model="topicTag" value="pricey"> API design<br />
+            </div>
+            <p><a href="javascript:" ng-click="refreshCourses()">Apply</a></p>
+        </form>
+    </div>
+    <div class="section">
         <div ng-repeat="c in courses" style="border: 1px solid black; padding: 15px;">
             <h3><a href="{{c.url}}"><span ng-bind="c.title"></span> (<span ng-bind="c.difficulty"></span>)</a></h3>
             <p ng-show="c.free" style="color: green">FREE</p>
