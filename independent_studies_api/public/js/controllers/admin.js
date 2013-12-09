@@ -85,7 +85,6 @@ function adminCtrl($scope, $http, $location) {
 
     $scope.updateResource = function (index) {
         console.log("Index is " + index)
-        delete $scope.resources[index]['tags'];
         delete $scope.resources[index]['tagAddInProgress'];
         delete $scope.resources[index]['hasUnsavedChanges'];
         $http.put('/courses/' + $scope.resources[index]['id'], {'course': $scope.resources[index]}).success(function (){

@@ -55,6 +55,7 @@
 
     <!-- detailed edit panel -->
     <div class="section resource-manager" style="padding: 20px; min-height: 500px;" ng-show="uiControls.detailEditInProgress">
+        {{uiControls.formData}}
         <form>
             <h3>Edit "{{uiControls.formData.title}}"</h3>
             <p>Name: <input type="text" ng-model="uiControls.formData.title" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
