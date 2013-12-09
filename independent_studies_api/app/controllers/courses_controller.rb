@@ -42,19 +42,7 @@ class CoursesController < ApplicationController
 	end
 
 	def create
-		@course = Course.new(course_params.delete(:tags))
-		if params[:course][:tags]
-		    params[:course][:tags].each do |t|
-		    	tag = Tag.find_by_text(t)
-		    	if tag == nil
-		    		new_tag = Tag.new(:text => t)
-		    		new_tag.save!
-		    		@course.tags << new_tag
-		    	else
-		    		@course.tags << tag
-		    	end
-		    end
-	    end
+		@course = Course.new(course_params)
 		@course.save
 		render json: @course
 	end
@@ -62,23 +50,6 @@ class CoursesController < ApplicationController
 	def update
 		@course = Course.find(params[:course][:id])
 		@course.update_attributes(course_params)
-		# Probably a cleaner way to update this ... make it conditional on some other passed param?
-		@course.tag_associations.each do |ta|
-			ta.destroy!
-		end
-		# not used currently
-		if params[:course][:tags]
-		    params[:course][:tags].each do |t|
-		    	tag = Tag.find_by_text(t)
-		    	if tag == nil
-		    		new_tag = Tag.new(:text => t)
-		    		new_tag.save!
-		    		@course.tags << new_tag
-		    	else
-		    		@course.tags << tag
-		    	end
-		    end
-	    end
 		@course.save!
 		render json: @course
 	end

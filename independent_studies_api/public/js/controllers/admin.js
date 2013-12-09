@@ -17,7 +17,7 @@ function adminCtrl($scope, $http, $location) {
 
     $scope.navControls.selectedPanel = 'admin';
 
-    $scope.uiControls = {detailEditInProgress: false, selectedResource: null};
+    $scope.uiControls = {showForm: false};
     $scope.resources = [];
 
     function refreshCourses() {
@@ -46,15 +46,13 @@ function adminCtrl($scope, $http, $location) {
         for (var i=0;i<$scope.resources.length;i++) {
             $scope.resources[i].hasUnsavedChanges = false;
         }
-        $scope.uiControls.detailEditInProgress = null;
-        $scope.uiControls.selectedResource = null;
         $scope.uiControls.formData = {
             title: null,
             difficulty: null,
-            free: false,
-            tags: [],
+            cost: null,
+            environment: null,
+            framework: null,
             url: null,
-            tagAddInProgress: false,
             hasUnsavedChanges: false,
             description: null,
             author: null
@@ -63,13 +61,16 @@ function adminCtrl($scope, $http, $location) {
 
     resetFormData();
 
+    $scope.initNew = function() {
+        resetFormData();
+        $scope.uiControls.showForm = true;
+        $scope.selectedRow = null;
+    };
+
     // CRUD ========================================================================================================
 
     $scope.addResource = function () {
-        delete $scope.resources[index]['tags'];
-        delete $scope.uiControls.formData['tagAddInProgress'];
         delete $scope.uiControls.formData['hasUnsavedChanges'];
-        $scope.uiControls.formData['tags'] = setNewTags();
         $http.post('/courses', {'course': $scope.uiControls.formData}).success(function (){
             resetFormData();
             resetSavedChanges();
@@ -88,9 +89,6 @@ function adminCtrl($scope, $http, $location) {
     };
 
     $scope.updateResource = function (index) {
-        console.log("Index is " + index)
-        delete $scope.resources[index]['tags'];
-        delete $scope.resources[index]['tagAddInProgress'];
         delete $scope.resources[index]['hasUnsavedChanges'];
         $http.put('/courses/' + $scope.resources[index]['id'], {'course': $scope.resources[index]}).success(function (){
             resetFormData();

@@ -1,5 +1,4 @@
 <div ng-controller="adminCtrl" ng-show="sessionData.userIsAdmin">
-
     <div class="section resource-manager">
         <!-- table of existing resources -->
         <table>
@@ -7,40 +6,31 @@
                 <td class="table-header">Title</td>
                 <td class="table-header">Author</td>
                 <td class="table-header">Publisher</td>
-                <td class="table-header">URL</td>
                 <td class="table-header">Action</td>
             </tr>
             <tr ng-repeat="r in resources" ng-click="selectRow($index)">
-                <td><input type="text" ng-model="r.title" ng-change="r.hasUnsavedChanges=true"></td>
-                <td><input type="text" ng-model="r.author" ng-change="r.hasUnsavedChanges=true"></td>
-                <td><input type="text" ng-model="r.publisher" ng-change="r.hasUnsavedChanges=true"></td>
-                <td><input type="text" style="width: 50px;" ng-model="r.url" ng-change="r.hasUnsavedChanges=true"></td>
-                <td><div class="button" ng-show="r.hasUnsavedChanges" ng-click="updateResource($index)">Save Changes</div>
-                    <div class="button" ng-show="!r.hasUnsavedChanges" ng-click="uiControls.detailEditInProgress=true; uiControls.formData=r; uiControls.selectedResource=$index">Edit Details</div>
+                <td ng-bind="r.title"></td>
+                <td ng-bind="r.author"></td>
+                <td ng-bind="r.publisher"></td>
+                <td>
+                    <div class="button" ng-show="!r.hasUnsavedChanges" ng-click="uiControls.showForm=true; uiControls.formData=r; selectRow($index)">Edit Details</div>
                     <div class="button" ng-click="deleteResource(r.id)">Delete</div></td>
             </tr>
-
-            <!-- quick tr form to add a new resource -->
-            <tr ng-show="!uiControls.detailEditInProgress">
-                <form>
-                    <td><input type="text" ng-model="uiControls.formData.title" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
-                    <td><input type="text" ng-model="uiControls.formData.author" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
-                    <td><input type="text" ng-model="uiControls.formData.publisher" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
-                    <td><input type="text" style="width: 50px;" ng-model="uiControls.formData.url" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
-                    <td><div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="addResource()">Save Changes</div></td>
-                </form>
-            </tr>
         </table>
+        <div class="button" ng-click="initNew()">New</div></td>
     </div>
 
-    <!-- detailed edit panel -->
-    <div class="section resource-manager" style="padding: 20px; min-height: 500px;" ng-show="uiControls.detailEditInProgress">
+
+    <!-- detailed form -->
+    <div class="section resource-manager" style="padding: 20px; min-height: 500px;" ng-show="uiControls.showForm">
         <form>
             <div style="display: inline-block; width: 375px; vertical-align: top;">
-                <h3>Edit "{{uiControls.formData.title}}"</h3>
-                <p>Name: <input type="text" ng-model="uiControls.formData.title" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
+                <h3 ng-show="selectedRow != null">Edit "{{uiControls.formData.title}}"</h3>
+                <h3 ng-show="selectedRow == null">Add new course</h3>
+                <p>Title: <input type="text" ng-model="uiControls.formData.title" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
+                <p>Author: <input type="text" ng-model="uiControls.formData.author" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
                 <p>Publisher: <input type="text" ng-model="uiControls.formData.publisher" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
-                <p>URL: <input type="text" ng-model="uiControls.formData.url" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
+                <p>URL: <input style="width: 200px;" type="text" ng-model="uiControls.formData.url" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
                 <p>Description:</p>
                 <textarea style="width: 350px; height: 150px;" ng-model="uiControls.formData.description" ng-change="uiControls.formData.hasUnsavedChanges=true"></textarea>
                 </p>
@@ -55,6 +45,7 @@
                     <input type="radio" ng-model="uiControls.formData.language" value="Python" ng-change="uiControls.formData.hasUnsavedChanges=true"> Python <br />
                     <input type="radio" ng-model="uiControls.formData.language" value="PHP" ng-change="uiControls.formData.hasUnsavedChanges=true"> PHP <br />
                     <input type="radio" ng-model="uiControls.formData.language" value="HTML/CSS" ng-change="uiControls.formData.hasUnsavedChanges=true"> HTML/CSS <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="HTML/CSS/JS" ng-change="uiControls.formData.hasUnsavedChanges=true"> HTML/CSS/JS <br />
                     <input type="radio" ng-model="uiControls.formData.language" value="Linux shell" ng-change="uiControls.formData.hasUnsavedChanges=true"> Linux shell <br />
                 </div>
                 <div style="display: inline-block; vertical-align: top; padding: 10px;">
@@ -110,7 +101,8 @@
                     <input type="radio" ng-model="uiControls.formData.environment" value="local" ng-change="uiControls.formData.hasUnsavedChanges=true"> local<br />
                     <input type="radio" ng-model="uiControls.formData.environment" value="in browser" ng-change="uiControls.formData.hasUnsavedChanges=true"> in browser<br />
                 </div>
-                <div class="button" style="display: block;" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="updateResource(selectedRow)">Save Changes</div>
+                <div ng-show="selectedRow != null" class="button" style="display: block;" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="updateResource(selectedRow)">Save Changes</div>
+                <div ng-show="selectedRow == null" class="button" style="display: block;" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="addResource()">Add Course</div>
             </div>
 
         </form>
