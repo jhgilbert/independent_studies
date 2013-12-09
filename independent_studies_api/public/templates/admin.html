@@ -5,27 +5,16 @@
         <table>
             <tr>
                 <td class="table-header">Title</td>
+                <td class="table-header">Author</td>
                 <td class="table-header">Publisher</td>
                 <td class="table-header">URL</td>
-                <td class="table-header">Difficulty</td>
-                <td class="table-header">Free?</td>
-                <td class="table-header">Tags</td>
                 <td class="table-header">Action</td>
             </tr>
             <tr ng-repeat="r in resources" ng-click="selectRow($index)">
                 <td><input type="text" ng-model="r.title" ng-change="r.hasUnsavedChanges=true"></td>
+                <td><input type="text" ng-model="r.author" ng-change="r.hasUnsavedChanges=true"></td>
                 <td><input type="text" ng-model="r.publisher" ng-change="r.hasUnsavedChanges=true"></td>
                 <td><input type="text" style="width: 50px;" ng-model="r.url" ng-change="r.hasUnsavedChanges=true"></td>
-                <td><input type="text" style="width: 50px;" ng-model="r.difficulty" ng-change="r.hasUnsavedChanges=true"></td>
-                <td><input type="checkbox" ng-model="r.free" ng-change="r.hasUnsavedChanges=true"></td>
-                <td>
-                    <span class="tag" ng-repeat="tag in r.tags" ng-bind="tag"></span>
-                    <a href="javascript:" ng-click="r.tagAddInProgress=true">+</a>
-                        <span ng-show="r.tagAddInProgress">
-                            <input type="text" ng-model="newTag">
-                            <button type="submit" ng-click="r.tags.push(newTag); resetTagForms();">Submit</button>
-                        </span>
-                </td>
                 <td><div class="button" ng-show="r.hasUnsavedChanges" ng-click="updateResource($index)">Save Changes</div>
                     <div class="button" ng-show="!r.hasUnsavedChanges" ng-click="uiControls.detailEditInProgress=true; uiControls.formData=r; uiControls.selectedResource=$index">Edit Details</div>
                     <div class="button" ng-click="deleteResource(r.id)">Delete</div></td>
@@ -35,18 +24,9 @@
             <tr ng-show="!uiControls.detailEditInProgress">
                 <form>
                     <td><input type="text" ng-model="uiControls.formData.title" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
+                    <td><input type="text" ng-model="uiControls.formData.author" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
                     <td><input type="text" ng-model="uiControls.formData.publisher" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
                     <td><input type="text" style="width: 50px;" ng-model="uiControls.formData.url" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
-                    <td><input type="text" style="width: 50px;" ng-model="uiControls.formData.difficulty" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
-                    <td><input type="checkbox" ng-model="uiControls.formData.free" ng-change="uiControls.formData.hasUnsavedChanges=true"></td>
-                    <td>
-                        <span class="tag" ng-repeat="tag in uiControls.formData.tags" ng-bind="tag"></span>
-                        <a href="javascript:" ng-click="uiControls.formData.tagAddInProgress=true">+</a>
-                        <span ng-show="uiControls.formData.tagAddInProgress">
-                            <input type="text" ng-model="newTag">
-                            <button type="submit" ng-click="uiControls.formData.tags.push(newTag); resetTagForms();">Submit</button>
-                        </span>
-                    </td>
                     <td><div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="addResource()">Save Changes</div></td>
                 </form>
             </tr>
@@ -55,25 +35,92 @@
 
     <!-- detailed edit panel -->
     <div class="section resource-manager" style="padding: 20px; min-height: 500px;" ng-show="uiControls.detailEditInProgress">
-        {{uiControls.formData}}
         <form>
-            <h3>Edit "{{uiControls.formData.title}}"</h3>
-            <p>Name: <input type="text" ng-model="uiControls.formData.title" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
-            <p>Publisher: <input type="text" ng-model="uiControls.formData.publisher" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
-            <p>Difficulty: <input type="text" ng-model="uiControls.formData.url" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
-            <p><input type="checkbox" ng-model="uiControls.formData.free" ng-change="uiControls.formData.hasUnsavedChanges=true"> This course is free</p>
-            <p>Description:</p>
-            <textarea style="width: 900px; height: 150px;" ng-model="uiControls.formData.description" ng-change="uiControls.formData.hasUnsavedChanges=true"></textarea>
-            </p>
-            <p>Tags: <span class="tag" ng-repeat="tag in uiControls.formData.tags" ng-bind="tag"></span></p>
-            </p>
-            <a href="javascript:" ng-click="uiControls.formData.tagAddInProgress=true">Add tag</a>
-                <span ng-show="uiControls.formData.tagAddInProgress">
-                    <input type="text" ng-model="newTag">
-                    <button type="submit" ng-click="uiControls.formData.tags.push(newTag); resetTagForms(); uiControls.formData.hasUnsavedChanges=true">Submit</button>
-                </span>
-            </p>
-            <div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="updateResource(selectedRow)">Save Changes</div>
+            <div style="display: inline-block; width: 375px; vertical-align: top;">
+                <h3>Edit "{{uiControls.formData.title}}"</h3>
+                <p>Name: <input type="text" ng-model="uiControls.formData.title" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
+                <p>Publisher: <input type="text" ng-model="uiControls.formData.publisher" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
+                <p>URL: <input type="text" ng-model="uiControls.formData.url" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
+                <p>Description:</p>
+                <textarea style="width: 350px; height: 150px;" ng-model="uiControls.formData.description" ng-change="uiControls.formData.hasUnsavedChanges=true"></textarea>
+                </p>
+            </div>
+
+            <div style="display: inline-block; width: 400px; vertical-align: top;">
+                {{uiControls.formData.tags}}
+                <h4>Set Tags</h4>
+                <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                    Language<br />
+                    <input type="radio" ng-model="langTag" value="any"> any <br />
+                    <input type="radio" ng-model="langTag" value="Ruby"> Ruby <br />
+                    <input type="radio" ng-model="langTag" value="JavaScript"> JavaScript <br />
+                    <input type="radio" ng-model="langTag" value="Python"> Python <br />
+                    <input type="radio" ng-model="langTag" value="PHP"> PHP <br />
+                    <input type="radio" ng-model="langTag" value="HTML/CSS"> HTML/CSS <br />
+                    <input type="radio" ng-model="langTag" value="Linux shell"> Linux shell <br />
+                </div>
+                <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                    Difficulty<br />
+                    <input type="radio" ng-model="difficultyTag" value="any"> any<br />
+                    <input type="radio" ng-model="difficultyTag" value="n00b"> n00b<br />
+                    <input type="radio" ng-model="difficultyTag" value="beginner"> beginner <br />
+                    <input type="radio" ng-model="difficultyTag" value="intermediate"> intermediate <br />
+                    <input type="radio" ng-model="difficultyTag" value="advanced"> advanced <br />
+                </div>
+                <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                    Cost<br />
+                    <input type="radio" ng-model="costTag" value="any"> any<br />
+                    <input type="radio" ng-model="costTag" value="free"> free<br />
+                    <input type="radio" ng-model="costTag" value="budget-friendly"> budget-friendly <br />
+                    <input type="radio" ng-model="costTag" value="pricey"> pricey <br />
+                </div>
+                <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                    Format<br />
+                    <input type="radio" ng-model="formatTag" value="any"> any<br />
+                    <input type="radio" ng-model="formatTag" value="mostly text"> mostly text<br />
+                    <input type="radio" ng-model="formatTag" value="mostly video"> mostly video<br />
+                    <input type="radio" ng-model="formatTag" value="mostly interaction"> mostly interaction <br />
+                </div>
+                <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                    Environment<br />
+                    <input type="radio" ng-model="environmentTag" value="any"> any<br />
+                    <input type="radio" ng-model="environmentTag" value="in browser"> in browser<br />
+                </div>
+                <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                    Library/Framework<br />
+                    <p ng-show="langTag === 'any'"><em>Choose a language</em></p>
+                    <div ng-show="langTag === 'Ruby'">
+                        <input type="radio" ng-model="frameworkTag" value="any"> any<br />
+                        <input type="radio" ng-model="frameworkTag" value="Sinatra"> Sinatra<br />
+                        <input type="radio" ng-model="frameworkTag" value="Rails"> Rails<br />
+                        <input type="radio" ng-model="frameworkTag" value="Rails API"> Rails API<br />
+                    </div>
+                    <div ng-show="langTag === 'Python'">
+                        <input type="radio" ng-model="frameworkTag" value="any"> any<br />
+                        <input type="radio" ng-model="frameworkTag" value="Django"> Django<br />
+                        <input type="radio" ng-model="frameworkTag" value="Flask"> Flask<br />
+                    </div>
+                    <div ng-show="langTag === 'JavaScript'">
+                        <input type="radio" ng-model="frameworkTag" value="any"> any<br />
+                        <input type="radio" ng-model="frameworkTag" value="jQuery"> jQuery<br />
+                        <input type="radio" ng-model="frameworkTag" value="AngularJS"> AngularJS<br />
+                        <input type="radio" ng-model="frameworkTag" value="Backbone.js"> Backbone.js<br />
+                        <input type="radio" ng-model="frameworkTag" value="Ember"> Ember<br />
+                    </div>
+                    <div ng-show="langTag === 'PHP'">
+                        <input type="radio" ng-model="frameworkTag" value="CakePHP"> CakePHP<br />
+                    </div>
+                </div>
+                <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                    Additional topic filter<br />
+                    <input type="radio" ng-model="topicTag" value="any"> any<br />
+                    <input type="radio" ng-model="topicTag" value="free"> algorithms<br />
+                    <input type="radio" ng-model="topicTag" value="budget-friendly"> security<br />
+                    <input type="radio" ng-model="topicTag" value="pricey"> API design<br />
+                </div>
+                <div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="updateResource(selectedRow)">Save Changes</div>
+            </div>
+
         </form>
     </div>
 

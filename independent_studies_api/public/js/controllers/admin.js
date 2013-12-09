@@ -1,5 +1,43 @@
 // Controller for the resource management page (admins only)
 function adminCtrl($scope, $http, $location) {
+    function clearTags() {
+        $scope.langTag = 'any';
+        $scope.frameworkTag = 'any';
+        $scope.costTag = 'any';
+        $scope.topicTag = 'any';
+        $scope.difficultyTag = 'any';
+        $scope.environmentTag = 'any';
+        $scope.formatTag = 'any';
+    }
+
+    clearTags();
+
+    function setNewTags() {
+        var newTags = [];
+        if ($scope.langTag !== 'any') {
+            newTags.push($scope.langTag);
+        }
+        if ($scope.frameworkTag !== 'any') {
+            newTags.push($scope.frameworkTag);
+        }
+        if ($scope.difficultyTag !== 'any') {
+            newTags.push($scope.difficultyTag);
+        }
+        if ($scope.costTag !== 'any') {
+            newTags.push($scope.costTag);
+        }
+        if ($scope.topicTag !== 'any') {
+            newTags.push($scope.topicTag);
+        }
+        if ($scope.environmentTag !== 'any') {
+            newTags.push($scope.environmentTag);
+        }
+        if ($scope.formatTag !== 'any') {
+            newTags.push($scope.formatTag);
+        }
+        return newTags;
+    }
+
     $scope.selectedRow = null;
 
     $scope.selectRow = function (index) {
@@ -20,14 +58,6 @@ function adminCtrl($scope, $http, $location) {
     refreshCourses();
 
     // FORM CONTROLS ===============================================================================================
-
-    $scope.resetTagForms = function () {
-        $scope.newTag = null;
-        $scope.uiControls.formData.tagAddInProgress = false;
-        for (var i=0;i<$scope.resources.length;i++) {
-            $scope.resources[i].tagAddInProgress = false;
-        }
-    };
 
     function resetSavedChanges() {
         for (var i=0;i<$scope.resources.length;i++) {
@@ -54,18 +84,17 @@ function adminCtrl($scope, $http, $location) {
             description: null,
             author: null
         };
+        clearTags();
     }
 
     resetFormData();
 
-    $scope.newTag = null;
-
     // CRUD ========================================================================================================
 
     $scope.addResource = function () {
-        delete $scope.uiControls.formData['tags'];
         delete $scope.uiControls.formData['tagAddInProgress'];
         delete $scope.uiControls.formData['hasUnsavedChanges'];
+        $scope.uiControls.formData['tags'] = setNewTags();
         $http.post('/courses', {'course': $scope.uiControls.formData}).success(function (){
             resetFormData();
             resetSavedChanges();
@@ -85,6 +114,7 @@ function adminCtrl($scope, $http, $location) {
 
     $scope.updateResource = function (index) {
         console.log("Index is " + index)
+        $scope.uiControls.formData['tags'] = setNewTags();
         delete $scope.resources[index]['tagAddInProgress'];
         delete $scope.resources[index]['hasUnsavedChanges'];
         $http.put('/courses/' + $scope.resources[index]['id'], {'course': $scope.resources[index]}).success(function (){

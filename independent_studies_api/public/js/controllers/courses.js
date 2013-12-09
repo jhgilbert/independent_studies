@@ -6,6 +6,8 @@ function coursesCtrl($scope, $http) {
     $scope.costTag = 'any';
     $scope.topicTag = 'any';
     $scope.difficultyTag = 'any';
+    $scope.environmentTag = 'any';
+    $scope.formatTag = 'any';
 
     function setQueryTags() {
         $scope.tags = [];
@@ -20,6 +22,15 @@ function coursesCtrl($scope, $http) {
         }
         if ($scope.topicTag !== 'any') {
             $scope.tags.push($scope.topicTag);
+        }
+        if ($scope.difficultyTag !== 'any') {
+            $scope.tags.push($scope.difficultyTag);
+        }
+        if ($scope.environmentTag !== 'any') {
+            $scope.tags.push($scope.environmentTag);
+        }
+        if ($scope.formatTag !== 'any') {
+            $scope.tags.push($scope.formatTag);
         }
     }
 

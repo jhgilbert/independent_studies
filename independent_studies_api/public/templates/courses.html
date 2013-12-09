@@ -1,5 +1,5 @@
 <div ng-controller="coursesCtrl">
-    <div class="section">
+    <div class="section" style="font-size: 12px;">
         <h3>Search courses</h3>
         <form>
             <div style="display: inline-block; vertical-align: top; padding: 10px;">
@@ -8,7 +8,7 @@
                 <input type="radio" ng-model="langTag" value="Ruby"> Ruby <br />
                 <input type="radio" ng-model="langTag" value="JavaScript"> JavaScript <br />
                 <input type="radio" ng-model="langTag" value="Python"> Python <br />
-                <input type="radio" ng-model="langTag" value="Python"> PHP <br />
+                <input type="radio" ng-model="langTag" value="PHP"> PHP <br />
                 <input type="radio" ng-model="langTag" value="HTML/CSS"> HTML/CSS <br />
                 <input type="radio" ng-model="langTag" value="Linux shell"> Linux shell <br />
             </div>
@@ -26,6 +26,18 @@
                 <input type="radio" ng-model="costTag" value="free"> free<br />
                 <input type="radio" ng-model="costTag" value="budget-friendly"> budget-friendly <br />
                 <input type="radio" ng-model="costTag" value="pricey"> pricey <br />
+            </div>
+            <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                Format<br />
+                <input type="radio" ng-model="formatTag" value="any"> any<br />
+                <input type="radio" ng-model="formatTag" value="mostly text"> mostly text<br />
+                <input type="radio" ng-model="formatTag" value="mostly video"> mostly video<br />
+                <input type="radio" ng-model="formatTag" value="mostly interaction"> mostly interaction <br />
+            </div>
+            <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                Environment<br />
+                <input type="radio" ng-model="environmentTag" value="any"> any<br />
+                <input type="radio" ng-model="environmentTag" value="in browser"> in browser<br />
             </div>
             <div style="display: inline-block; vertical-align: top; padding: 10px;">
                 Library/Framework<br />
