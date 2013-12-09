@@ -1,18 +1,13 @@
 // Controller for the resource management page (admins only)
 function adminCtrl($scope, $http, $location) {
-    function clearTags() {
-        $scope.topicTag = 'any';
-    }
-
-    clearTags();
-
-    function setNewTags() {
-        var newTags = [];
-        if ($scope.topicTag !== 'any') {
-            newTags.push($scope.topicTag);
-        }
-        return newTags;
-    }
+    $scope.searchParams = {
+        language: "any",
+        environment: "any",
+        format: "any",
+        cost: "any",
+        difficulty: "any",
+        framework: "any"
+    };
 
     $scope.selectedRow = null;
 
@@ -26,7 +21,11 @@ function adminCtrl($scope, $http, $location) {
     $scope.resources = [];
 
     function refreshCourses() {
-        $http.get('/courses').success(function(data, status, headers, config) {
+        $http({
+            url: '/courses',
+            method: 'GET',
+            params: $scope.searchParams
+        }).success(function (data, status, headers, config) {
             $scope.resources = data.courses;
         });
     }
@@ -60,7 +59,6 @@ function adminCtrl($scope, $http, $location) {
             description: null,
             author: null
         };
-        clearTags();
     }
 
     resetFormData();

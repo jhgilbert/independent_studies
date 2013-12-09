@@ -35,7 +35,6 @@
 
     <!-- detailed edit panel -->
     <div class="section resource-manager" style="padding: 20px; min-height: 500px;" ng-show="uiControls.detailEditInProgress">
-        {{uiControls.formData}}
         <form>
             <div style="display: inline-block; width: 375px; vertical-align: top;">
                 <h3>Edit "{{uiControls.formData.title}}"</h3>
@@ -51,75 +50,67 @@
                 <h4>Set Values</h4>
                 <div style="display: inline-block; vertical-align: top; padding: 10px;">
                     Language<br />
-                    <input type="radio" ng-model="uiControls.formData.language" value=""> any <br />
-                    <input type="radio" ng-model="uiControls.formData.language" value="Ruby"> Ruby <br />
-                    <input type="radio" ng-model="uiControls.formData.language" value="JavaScript"> JavaScript <br />
-                    <input type="radio" ng-model="uiControls.formData.language" value="Python"> Python <br />
-                    <input type="radio" ng-model="uiControls.formData.language" value="PHP"> PHP <br />
-                    <input type="radio" ng-model="uiControls.formData.language" value="HTML/CSS"> HTML/CSS <br />
-                    <input type="radio" ng-model="uiControls.formData.language" value="Linux shell"> Linux shell <br />
-                </div>
-                <div style="display: inline-block; vertical-align: top; padding: 10px;">
-                    Difficulty<br />
-                    <input type="radio" ng-model="uiControls.formData.difficulty" value=""> any<br />
-                    <input type="radio" ng-model="uiControls.formData.difficulty" value="n00b"> n00b<br />
-                    <input type="radio" ng-model="uiControls.formData.difficulty" value="beginner"> beginner <br />
-                    <input type="radio" ng-model="uiControls.formData.difficulty" value="intermediate"> intermediate <br />
-                    <input type="radio" ng-model="uiControls.formData.difficulty" value="advanced"> advanced <br />
-                </div>
-                <div style="display: inline-block; vertical-align: top; padding: 10px;">
-                    Cost<br />
-                    <input type="radio" ng-model="uiControls.formData.cost" value="any"> any<br />
-                    <input type="radio" ng-model="uiControls.formData.cost" value="free"> free<br />
-                    <input type="radio" ng-model="uiControls.formData.cost" value="budget-friendly"> budget-friendly <br />
-                    <input type="radio" ng-model="uiControls.formData.cost" value="pricey"> pricey <br />
-                </div>
-                <div style="display: inline-block; vertical-align: top; padding: 10px;">
-                    Format<br />
-                    <input type="radio" ng-model="uiControls.formData.format" value=""> any<br />
-                    <input type="radio" ng-model="uiControls.formData.format" value="mostly text"> mostly text<br />
-                    <input type="radio" ng-model="uiControls.formData.format" value="mostly video"> mostly video<br />
-                    <input type="radio" ng-model="uiControls.formData.format" value="mostly interaction"> mostly interaction <br />
-                </div>
-                <div style="display: inline-block; vertical-align: top; padding: 10px;">
-                    Environment<br />
-                    <input type="radio" ng-model="uiControls.formData.environment" value=""> any<br />
-                    <input type="radio" ng-model="uiControls.formData.environment" value="in browser"> in browser<br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="Ruby" ng-change="uiControls.formData.hasUnsavedChanges=true"> Ruby <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="JavaScript" ng-change="uiControls.formData.hasUnsavedChanges=true"> JavaScript <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="Python" ng-change="uiControls.formData.hasUnsavedChanges=true"> Python <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="PHP" ng-change="uiControls.formData.hasUnsavedChanges=true"> PHP <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="HTML/CSS" ng-change="uiControls.formData.hasUnsavedChanges=true"> HTML/CSS <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="Linux shell" ng-change="uiControls.formData.hasUnsavedChanges=true"> Linux shell <br />
                 </div>
                 <div style="display: inline-block; vertical-align: top; padding: 10px;">
                     Library/Framework<br />
-                    <p ng-show="uiControls.formData.language === 'any'"><em>Choose a language</em></p>
+                    <p ng-show="uiControls.formData.language === '' || uiControls.formData.language === 'HTML/CSS'">
+                        <input type="radio" ng-model="uiControls.formData.framework" value="none" ng-change="uiControls.formData.hasUnsavedChanges=true"> none<br />
+                    </p>
                     <div ng-show="uiControls.formData.language === 'Ruby'">
-                        <input type="radio" ng-model="uiControls.formData.framework" value=""> any<br />
-                        <input type="radio" ng-model="uiControls.formData.framework" value="Sinatra"> Sinatra<br />
-                        <input type="radio" ng-model="uiControls.formData.framework" value="Rails"> Rails<br />
-                        <input type="radio" ng-model="uiControls.formData.framework" value="Rails API"> Rails API<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="none" ng-change="uiControls.formData.hasUnsavedChanges=true"> none<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Sinatra" ng-change="uiControls.formData.hasUnsavedChanges=true"> Sinatra<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Rails" ng-change="uiControls.formData.hasUnsavedChanges=true"> Rails<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Rails API" ng-change="uiControls.formData.hasUnsavedChanges=true"> Rails API<br />
                     </div>
                     <div ng-show="uiControls.formData.language === 'Python'">
-                        <input type="radio" ng-model="uiControls.formData.framework" value=""> any<br />
-                        <input type="radio" ng-model="uiControls.formData.framework" value="Django"> Django<br />
-                        <input type="radio" ng-model="uiControls.formData.framework" value="Flask"> Flask<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="none" ng-change="uiControls.formData.hasUnsavedChanges=true"> none<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Django" ng-change="uiControls.formData.hasUnsavedChanges=true"> Django<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Flask" ng-change="uiControls.formData.hasUnsavedChanges=true"> Flask<br />
                     </div>
                     <div ng-show="uiControls.formData.language === 'JavaScript'">
-                        <input type="radio" ng-model="uiControls.formData.framework" value=""> any<br />
-                        <input type="radio" ng-model="uiControls.formData.framework" value="jQuery"> jQuery<br />
-                        <input type="radio" ng-model="uiControls.formData.framework" value="AngularJS"> AngularJS<br />
-                        <input type="radio" ng-model="uiControls.formData.framework" value="Backbone.js"> Backbone.js<br />
-                        <input type="radio" ng-model="uiControls.formData.framework" value="Ember"> Ember<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="none" ng-change="uiControls.formData.hasUnsavedChanges=true"> none<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="jQuery" ng-change="uiControls.formData.hasUnsavedChanges=true"> jQuery<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="AngularJS" ng-change="uiControls.formData.hasUnsavedChanges=true"> AngularJS<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Backbone.js" ng-change="uiControls.formData.hasUnsavedChanges=true"> Backbone.js<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Ember" ng-change="uiControls.formData.hasUnsavedChanges=true"> Ember<br />
                     </div>
                     <div ng-show="uiControls.formData.language === 'PHP'">
-                        <input type="radio" ng-model="uiControls.formData.framework" value=""> any<br />
-                        <input type="radio" ng-model="uiControls.formData.framework" value="CakePHP"> CakePHP<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="none" ng-change="uiControls.formData.hasUnsavedChanges=true"> none<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="CakePHP" ng-change="uiControls.formData.hasUnsavedChanges=true"> CakePHP<br />
                     </div>
                 </div>
                 <div style="display: inline-block; vertical-align: top; padding: 10px;">
-                    Additional topic filter<br />
-                    <input type="radio" ng-model="topicTag" value="any"> any<br />
-                    <input type="radio" ng-model="topicTag" value="free"> algorithms<br />
-                    <input type="radio" ng-model="topicTag" value="budget-friendly"> security<br />
-                    <input type="radio" ng-model="topicTag" value="pricey"> API design<br />
+                    Difficulty<br />
+                    <input type="radio" ng-model="uiControls.formData.difficulty" value="n00b" ng-change="uiControls.formData.hasUnsavedChanges=true"> n00b<br />
+                    <input type="radio" ng-model="uiControls.formData.difficulty" value="beginner" ng-change="uiControls.formData.hasUnsavedChanges=true"> beginner <br />
+                    <input type="radio" ng-model="uiControls.formData.difficulty" value="intermediate" ng-change="uiControls.formData.hasUnsavedChanges=true"> intermediate <br />
+                    <input type="radio" ng-model="uiControls.formData.difficulty" value="advanced" ng-change="uiControls.formData.hasUnsavedChanges=true"> advanced <br />
                 </div>
-                <div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="updateResource(selectedRow)">Save Changes</div>
+                <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                    Cost<br />
+                    <input type="radio" ng-model="uiControls.formData.cost" value="free" ng-change="uiControls.formData.hasUnsavedChanges=true"> free<br />
+                    <input type="radio" ng-model="uiControls.formData.cost" value="budget-friendly" ng-change="uiControls.formData.hasUnsavedChanges=true"> budget-friendly <br />
+                    <input type="radio" ng-model="uiControls.formData.cost" value="pricey" ng-change="uiControls.formData.hasUnsavedChanges=true"> pricey <br />
+                </div>
+                <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                    Predominant format<br />
+                    <input type="radio" ng-model="uiControls.formData.format" value="text" ng-change="uiControls.formData.hasUnsavedChanges=true">text<br />
+                    <input type="radio" ng-model="uiControls.formData.format" value="video" ng-change="uiControls.formData.hasUnsavedChanges=true">video<br />
+                    <input type="radio" ng-model="uiControls.formData.format" value="interaction" ng-change="uiControls.formData.hasUnsavedChanges=true">interaction<br />
+                </div>
+                <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                    Environment<br />
+                    <input type="radio" ng-model="uiControls.formData.environment" value="none" ng-change="uiControls.formData.hasUnsavedChanges=true"> none<br />
+                    <input type="radio" ng-model="uiControls.formData.environment" value="local" ng-change="uiControls.formData.hasUnsavedChanges=true"> local<br />
+                    <input type="radio" ng-model="uiControls.formData.environment" value="in browser" ng-change="uiControls.formData.hasUnsavedChanges=true"> in browser<br />
+                </div>
+                <div class="button" style="display: block;" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="updateResource(selectedRow)">Save Changes</div>
             </div>
 
         </form>

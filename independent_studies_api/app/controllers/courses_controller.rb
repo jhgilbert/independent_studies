@@ -6,25 +6,26 @@ class CoursesController < ApplicationController
 		# worth splitting into two routes to speed up both types of requests
 
 		@response = {}
-		courses = Course.preload(:tags).load
-		@courses = []
-		courses.each do |c|
-			# restrict matches to desired tags
-			match_failed = false
-			if params[:tags]
-				params[:tags].split(',').each do |t|
-					tag = Tag.find_by_text(t)
-					match_failed = true unless c.tags.include?(tag)
-				end
+		courses = Course.all
+		if params
+			if params[:language] != "any"
+				courses = courses.where(:language => params[:language]).load
 			end
-			next if match_failed
-			# add tags into returned data - only really needed for admin
-			course_info = c.attributes # TODO: Method is expensive ... is there a better way?
-			course_info['tags'] = []
-			c.tags.each do |t|
-				course_info['tags'] << t.text
+			if params[:framework] != "any"
+				courses = courses.where(:framework => params[:framework]).load
 			end
-		    @courses << course_info
+			if params[:difficulty] != "any"
+				courses = courses.where(:difficulty => params[:difficulty]).load
+			end
+			if params[:cost] != "any"
+				courses = courses.where(:cost => params[:cost]).load
+			end
+			if params[:format] != "any"
+				courses = courses.where(:format => params[:format]).load
+			end
+			if params[:environment] != "any"
+				courses = courses.where(:environment => params[:environment]).load
+			end
 		end
 		enrollment_key = {}
 		if session[:id] != nil
@@ -35,7 +36,7 @@ class CoursesController < ApplicationController
 				end
 			end
 		end
-		@response['courses'] = @courses
+		@response['courses'] = courses
 		@response['enrollment_key'] = enrollment_key
 		render json: @response
 	end

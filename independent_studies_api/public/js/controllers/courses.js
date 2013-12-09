@@ -1,46 +1,19 @@
 function coursesCtrl($scope, $http) {
     $scope.navControls.selectedPanel = 'courses';
-    $scope.tags = [];
-    $scope.langTag = 'any';
-    $scope.frameworkTag = 'any';
-    $scope.costTag = 'any';
-    $scope.topicTag = 'any';
-    $scope.difficultyTag = 'any';
-    $scope.environmentTag = 'any';
-    $scope.formatTag = 'any';
-
-    function setQueryTags() {
-        $scope.tags = [];
-        if ($scope.langTag !== 'any') {
-            $scope.tags.push($scope.langTag);
-        }
-        if ($scope.frameworkTag !== 'any') {
-            $scope.tags.push($scope.frameworkTag);
-        }
-        if ($scope.costTag !== 'any') {
-            $scope.tags.push($scope.costTag);
-        }
-        if ($scope.topicTag !== 'any') {
-            $scope.tags.push($scope.topicTag);
-        }
-        if ($scope.difficultyTag !== 'any') {
-            $scope.tags.push($scope.difficultyTag);
-        }
-        if ($scope.environmentTag !== 'any') {
-            $scope.tags.push($scope.environmentTag);
-        }
-        if ($scope.formatTag !== 'any') {
-            $scope.tags.push($scope.formatTag);
-        }
-    }
+    $scope.searchParams = {
+        language: "any",
+        environment: "any",
+        format: "any",
+        cost: "any",
+        difficulty: "any",
+        framework: "any"
+    };
 
     $scope.refreshCourses = function() {
-        setQueryTags();
         $http({
             url: '/courses',
             method: 'GET',
-            //TODO: This is awkward -- how can I use Angular to pass a real array as a GET parameter?
-            params: {tags: $scope.tags.join(",")}
+            params: $scope.searchParams
         }).success(function (data) {
                 $scope.courses = data.courses;
                 var enrollmentKey = data.enrollment_key;
@@ -55,6 +28,8 @@ function coursesCtrl($scope, $http) {
 
     $scope.refreshCourses();
 
+    /**
+     * This is for later ...
     $scope.toggleTag = function(tag) {
         var index = $scope.tags.indexOf(tag);
         if (index === -1) {
@@ -65,6 +40,7 @@ function coursesCtrl($scope, $http) {
         }
         console.log("Scope tags are " + $scope.tags);
     };
+     */
 
     $scope.createEnrollment = function(index, course_id) {
         $http.post('/enrollments', {'enrollment': { 'course_id': course_id}}).success(function () {

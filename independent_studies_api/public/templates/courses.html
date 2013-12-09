@@ -4,73 +4,66 @@
         <form>
             <div style="display: inline-block; vertical-align: top; padding: 10px;">
                 Language<br />
-                <input type="radio" ng-model="langTag" value=""> any <br />
-                <input type="radio" ng-model="langTag" value="Ruby"> Ruby <br />
-                <input type="radio" ng-model="langTag" value="JavaScript"> JavaScript <br />
-                <input type="radio" ng-model="langTag" value="Python"> Python <br />
-                <input type="radio" ng-model="langTag" value="PHP"> PHP <br />
-                <input type="radio" ng-model="langTag" value="HTML/CSS"> HTML/CSS <br />
-                <input type="radio" ng-model="langTag" value="Linux shell"> Linux shell <br />
-            </div>
-            <div style="display: inline-block; vertical-align: top; padding: 10px;">
-                Difficulty<br />
-                <input type="radio" ng-model="difficultyTag" value=""> any<br />
-                <input type="radio" ng-model="difficultyTag" value="n00b"> n00b<br />
-                <input type="radio" ng-model="difficultyTag" value="beginner"> beginner <br />
-                <input type="radio" ng-model="difficultyTag" value="intermediate"> intermediate <br />
-                <input type="radio" ng-model="difficultyTag" value="advanced"> advanced <br />
-            </div>
-            <div style="display: inline-block; vertical-align: top; padding: 10px;">
-                Cost<br />
-                <input type="radio" ng-model="costTag" value=""> any<br />
-                <input type="radio" ng-model="costTag" value="free"> free<br />
-                <input type="radio" ng-model="costTag" value="budget-friendly"> budget-friendly <br />
-                <input type="radio" ng-model="costTag" value="pricey"> pricey <br />
-            </div>
-            <div style="display: inline-block; vertical-align: top; padding: 10px;">
-                Format<br />
-                <input type="radio" ng-model="formatTag" value=""> any<br />
-                <input type="radio" ng-model="formatTag" value="mostly text"> mostly text<br />
-                <input type="radio" ng-model="formatTag" value="mostly video"> mostly video<br />
-                <input type="radio" ng-model="formatTag" value="mostly interaction"> mostly interaction <br />
-            </div>
-            <div style="display: inline-block; vertical-align: top; padding: 10px;">
-                Environment<br />
-                <input type="radio" ng-model="environmentTag" value=""> any<br />
-                <input type="radio" ng-model="environmentTag" value="in browser"> in browser<br />
+                <input type="radio" ng-model="searchParams.language" value="any"> any <br />
+                <input type="radio" ng-model="searchParams.language" value="Ruby"> Ruby <br />
+                <input type="radio" ng-model="searchParams.language" value="JavaScript"> JavaScript <br />
+                <input type="radio" ng-model="searchParams.language" value="Python"> Python <br />
+                <input type="radio" ng-model="searchParams.language" value="PHP"> PHP <br />
+                <input type="radio" ng-model="searchParams.language" value="HTML/CSS"> HTML/CSS <br />
+                <input type="radio" ng-model="searchParams.language" value="Linux shell"> Linux shell <br />
             </div>
             <div style="display: inline-block; vertical-align: top; padding: 10px;">
                 Library/Framework<br />
-                <p ng-show="langTag === 'any'"><em>Choose a language</em></p>
-                <div ng-show="langTag === 'Ruby'">
-                    <input type="radio" ng-model="frameworkTag" value=""> any<br />
-                    <input type="radio" ng-model="frameworkTag" value="Sinatra"> Sinatra<br />
-                    <input type="radio" ng-model="frameworkTag" value="Rails"> Rails<br />
-                    <input type="radio" ng-model="frameworkTag" value="Rails API"> Rails API<br />
+                <p ng-show="searchParams.language === 'any'"><em>N/A</em></p>
+                <div ng-show="searchParams.language === 'Ruby'">
+                    <input type="radio" ng-model="searchParams.framework" value="any"> any<br />
+                    <input type="radio" ng-model="searchParams.framework" value="Sinatra"> Sinatra<br />
+                    <input type="radio" ng-model="searchParams.framework" value="Rails"> Rails<br />
+                    <input type="radio" ng-model="searchParams.framework" value="Rails API"> Rails API<br />
                 </div>
-                <div ng-show="langTag === 'Python'">
-                    <input type="radio" ng-model="frameworkTag" value=""> any<br />
-                    <input type="radio" ng-model="frameworkTag" value="Django"> Django<br />
-                    <input type="radio" ng-model="frameworkTag" value="Flask"> Flask<br />
+                <div ng-show="searchParams.language === 'Python'">
+                    <input type="radio" ng-model="searchParams.framework" value="any"> any<br />
+                    <input type="radio" ng-model="searchParams.framework" value="Django"> Django<br />
+                    <input type="radio" ng-model="searchParams.framework" value="Flask"> Flask<br />
                 </div>
-                <div ng-show="langTag === 'JavaScript'">
-                    <input type="radio" ng-model="frameworkTag" value=""> any<br />
-                    <input type="radio" ng-model="frameworkTag" value="jQuery"> jQuery<br />
-                    <input type="radio" ng-model="frameworkTag" value="AngularJS"> AngularJS<br />
-                    <input type="radio" ng-model="frameworkTag" value="Backbone.js"> Backbone.js<br />
-                    <input type="radio" ng-model="frameworkTag" value="Ember"> Ember<br />
+                <div ng-show="searchParams.language === 'JavaScript'">
+                    <input type="radio" ng-model="searchParams.framework" value="any"> any<br />
+                    <input type="radio" ng-model="searchParams.framework" value="jQuery"> jQuery<br />
+                    <input type="radio" ng-model="searchParams.framework" value="AngularJS"> AngularJS<br />
+                    <input type="radio" ng-model="searchParams.framework" value="Backbone.js"> Backbone.js<br />
+                    <input type="radio" ng-model="searchParams.framework" value="Ember"> Ember<br />
                 </div>
-                <div ng-show="langTag === 'PHP'">
-                    <input type="radio" ng-model="frameworkTag" value=""> any<br />
-                    <input type="radio" ng-model="frameworkTag" value="CakePHP"> CakePHP<br />
+                <div ng-show="searchParams.language === 'PHP'">
+                    <input type="radio" ng-model="searchParams.framework" value="any"> any<br />
+                    <input type="radio" ng-model="searchParams.framework" value="CakePHP"> CakePHP<br />
                 </div>
             </div>
             <div style="display: inline-block; vertical-align: top; padding: 10px;">
-                Additional topic filter<br />
-                <input type="radio" ng-model="topicTag" value="any"> any<br />
-                <input type="radio" ng-model="topicTag" value="free"> algorithms<br />
-                <input type="radio" ng-model="topicTag" value="budget-friendly"> security<br />
-                <input type="radio" ng-model="topicTag" value="pricey"> API design<br />
+                Difficulty<br />
+                <input type="radio" ng-model="searchParams.difficulty" value="any"> any<br />
+                <input type="radio" ng-model="searchParams.difficulty" value="n00b"> n00b<br />
+                <input type="radio" ng-model="searchParams.difficulty" value="beginner"> beginner <br />
+                <input type="radio" ng-model="searchParams.difficulty" value="intermediate"> intermediate <br />
+                <input type="radio" ng-model="searchParams.difficulty" value="advanced"> advanced <br />
+            </div>
+            <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                Cost<br />
+                <input type="radio" ng-model="searchParams.cost" value="any"> any<br />
+                <input type="radio" ng-model="searchParams.cost" value="free"> free<br />
+                <input type="radio" ng-model="searchParams.cost" value="budget-friendly"> budget-friendly <br />
+                <input type="radio" ng-model="searchParams.cost" value="pricey"> pricey <br />
+            </div>
+            <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                Format<br />
+                <input type="radio" ng-model="searchParams.format" value="any"> any<br />
+                <input type="radio" ng-model="searchParams.format" value="text"> mostly text<br />
+                <input type="radio" ng-model="searchParams.format" value="video"> mostly video<br />
+                <input type="radio" ng-model="searchParams.format" value="interaction"> mostly interaction <br />
+            </div>
+            <div style="display: inline-block; vertical-align: top; padding: 10px;">
+                Environment<br />
+                <input type="radio" ng-model="searchParams.environment" value="any"> any<br />
+                <input type="radio" ng-model="searchParams.environment" value="in browser"> in browser<br />
             </div>
             <p><a href="javascript:" ng-click="refreshCourses()">Apply</a></p>
         </form>
@@ -78,7 +71,6 @@
     <div class="section">
         <div ng-repeat="c in courses" style="border: 1px solid black; padding: 15px;">
             <h3><a href="{{c.url}}"><span ng-bind="c.title"></span> (<span ng-bind="c.difficulty"></span>)</a></h3>
-            <p ng-show="c.free" style="color: green">FREE</p>
             <p ng-bind="c.author"></p>
             <p ng-bind-html-unsafe="c.description"></p>
             <div style="float: right;" ng-show="sessionData.userIsLoggedIn && !c.enrolled" class="button" ng-click="createEnrollment($index, c.id)">Enroll</div>
