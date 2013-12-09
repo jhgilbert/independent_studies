@@ -35,6 +35,7 @@
 
     <!-- detailed edit panel -->
     <div class="section resource-manager" style="padding: 20px; min-height: 500px;" ng-show="uiControls.detailEditInProgress">
+        {{uiControls.formData}}
         <form>
             <div style="display: inline-block; width: 375px; vertical-align: top;">
                 <h3>Edit "{{uiControls.formData.title}}"</h3>
@@ -47,68 +48,68 @@
             </div>
 
             <div style="display: inline-block; width: 400px; vertical-align: top;">
-                {{uiControls.formData.tags}}
-                <h4>Set Tags</h4>
+                <h4>Set Values</h4>
                 <div style="display: inline-block; vertical-align: top; padding: 10px;">
                     Language<br />
-                    <input type="radio" ng-model="langTag" value="any"> any <br />
-                    <input type="radio" ng-model="langTag" value="Ruby"> Ruby <br />
-                    <input type="radio" ng-model="langTag" value="JavaScript"> JavaScript <br />
-                    <input type="radio" ng-model="langTag" value="Python"> Python <br />
-                    <input type="radio" ng-model="langTag" value="PHP"> PHP <br />
-                    <input type="radio" ng-model="langTag" value="HTML/CSS"> HTML/CSS <br />
-                    <input type="radio" ng-model="langTag" value="Linux shell"> Linux shell <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value=""> any <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="Ruby"> Ruby <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="JavaScript"> JavaScript <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="Python"> Python <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="PHP"> PHP <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="HTML/CSS"> HTML/CSS <br />
+                    <input type="radio" ng-model="uiControls.formData.language" value="Linux shell"> Linux shell <br />
                 </div>
                 <div style="display: inline-block; vertical-align: top; padding: 10px;">
                     Difficulty<br />
-                    <input type="radio" ng-model="difficultyTag" value="any"> any<br />
-                    <input type="radio" ng-model="difficultyTag" value="n00b"> n00b<br />
-                    <input type="radio" ng-model="difficultyTag" value="beginner"> beginner <br />
-                    <input type="radio" ng-model="difficultyTag" value="intermediate"> intermediate <br />
-                    <input type="radio" ng-model="difficultyTag" value="advanced"> advanced <br />
+                    <input type="radio" ng-model="uiControls.formData.difficulty" value=""> any<br />
+                    <input type="radio" ng-model="uiControls.formData.difficulty" value="n00b"> n00b<br />
+                    <input type="radio" ng-model="uiControls.formData.difficulty" value="beginner"> beginner <br />
+                    <input type="radio" ng-model="uiControls.formData.difficulty" value="intermediate"> intermediate <br />
+                    <input type="radio" ng-model="uiControls.formData.difficulty" value="advanced"> advanced <br />
                 </div>
                 <div style="display: inline-block; vertical-align: top; padding: 10px;">
                     Cost<br />
-                    <input type="radio" ng-model="costTag" value="any"> any<br />
-                    <input type="radio" ng-model="costTag" value="free"> free<br />
-                    <input type="radio" ng-model="costTag" value="budget-friendly"> budget-friendly <br />
-                    <input type="radio" ng-model="costTag" value="pricey"> pricey <br />
+                    <input type="radio" ng-model="uiControls.formData.cost" value="any"> any<br />
+                    <input type="radio" ng-model="uiControls.formData.cost" value="free"> free<br />
+                    <input type="radio" ng-model="uiControls.formData.cost" value="budget-friendly"> budget-friendly <br />
+                    <input type="radio" ng-model="uiControls.formData.cost" value="pricey"> pricey <br />
                 </div>
                 <div style="display: inline-block; vertical-align: top; padding: 10px;">
                     Format<br />
-                    <input type="radio" ng-model="formatTag" value="any"> any<br />
-                    <input type="radio" ng-model="formatTag" value="mostly text"> mostly text<br />
-                    <input type="radio" ng-model="formatTag" value="mostly video"> mostly video<br />
-                    <input type="radio" ng-model="formatTag" value="mostly interaction"> mostly interaction <br />
+                    <input type="radio" ng-model="uiControls.formData.format" value=""> any<br />
+                    <input type="radio" ng-model="uiControls.formData.format" value="mostly text"> mostly text<br />
+                    <input type="radio" ng-model="uiControls.formData.format" value="mostly video"> mostly video<br />
+                    <input type="radio" ng-model="uiControls.formData.format" value="mostly interaction"> mostly interaction <br />
                 </div>
                 <div style="display: inline-block; vertical-align: top; padding: 10px;">
                     Environment<br />
-                    <input type="radio" ng-model="environmentTag" value="any"> any<br />
-                    <input type="radio" ng-model="environmentTag" value="in browser"> in browser<br />
+                    <input type="radio" ng-model="uiControls.formData.environment" value=""> any<br />
+                    <input type="radio" ng-model="uiControls.formData.environment" value="in browser"> in browser<br />
                 </div>
                 <div style="display: inline-block; vertical-align: top; padding: 10px;">
                     Library/Framework<br />
-                    <p ng-show="langTag === 'any'"><em>Choose a language</em></p>
-                    <div ng-show="langTag === 'Ruby'">
-                        <input type="radio" ng-model="frameworkTag" value="any"> any<br />
-                        <input type="radio" ng-model="frameworkTag" value="Sinatra"> Sinatra<br />
-                        <input type="radio" ng-model="frameworkTag" value="Rails"> Rails<br />
-                        <input type="radio" ng-model="frameworkTag" value="Rails API"> Rails API<br />
+                    <p ng-show="uiControls.formData.language === 'any'"><em>Choose a language</em></p>
+                    <div ng-show="uiControls.formData.language === 'Ruby'">
+                        <input type="radio" ng-model="uiControls.formData.framework" value=""> any<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Sinatra"> Sinatra<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Rails"> Rails<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Rails API"> Rails API<br />
                     </div>
-                    <div ng-show="langTag === 'Python'">
-                        <input type="radio" ng-model="frameworkTag" value="any"> any<br />
-                        <input type="radio" ng-model="frameworkTag" value="Django"> Django<br />
-                        <input type="radio" ng-model="frameworkTag" value="Flask"> Flask<br />
+                    <div ng-show="uiControls.formData.language === 'Python'">
+                        <input type="radio" ng-model="uiControls.formData.framework" value=""> any<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Django"> Django<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Flask"> Flask<br />
                     </div>
-                    <div ng-show="langTag === 'JavaScript'">
-                        <input type="radio" ng-model="frameworkTag" value="any"> any<br />
-                        <input type="radio" ng-model="frameworkTag" value="jQuery"> jQuery<br />
-                        <input type="radio" ng-model="frameworkTag" value="AngularJS"> AngularJS<br />
-                        <input type="radio" ng-model="frameworkTag" value="Backbone.js"> Backbone.js<br />
-                        <input type="radio" ng-model="frameworkTag" value="Ember"> Ember<br />
+                    <div ng-show="uiControls.formData.language === 'JavaScript'">
+                        <input type="radio" ng-model="uiControls.formData.framework" value=""> any<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="jQuery"> jQuery<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="AngularJS"> AngularJS<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Backbone.js"> Backbone.js<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="Ember"> Ember<br />
                     </div>
-                    <div ng-show="langTag === 'PHP'">
-                        <input type="radio" ng-model="frameworkTag" value="CakePHP"> CakePHP<br />
+                    <div ng-show="uiControls.formData.language === 'PHP'">
+                        <input type="radio" ng-model="uiControls.formData.framework" value=""> any<br />
+                        <input type="radio" ng-model="uiControls.formData.framework" value="CakePHP"> CakePHP<br />
                     </div>
                 </div>
                 <div style="display: inline-block; vertical-align: top; padding: 10px;">

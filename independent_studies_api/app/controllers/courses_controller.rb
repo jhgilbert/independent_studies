@@ -42,38 +42,43 @@ class CoursesController < ApplicationController
 
 	def create
 		@course = Course.new(course_params.delete(:tags))
-		params[:course][:tags].each do |t|
-			tag = Tag.find_by_text(t)
-			if tag == nil
-				new_tag = Tag.new(:text => t)
-				new_tag.save!
-				@course.tags << new_tag
-			else
-				@course.tags << tag
-			end
-		end
+		if params[:course][:tags]
+		    params[:course][:tags].each do |t|
+		    	tag = Tag.find_by_text(t)
+		    	if tag == nil
+		    		new_tag = Tag.new(:text => t)
+		    		new_tag.save!
+		    		@course.tags << new_tag
+		    	else
+		    		@course.tags << tag
+		    	end
+		    end
+	    end
 		@course.save
 		render json: @course
 	end
 
 	def update
 		@course = Course.find(params[:course][:id])
-		@course.update_attributes(course_params.delete(:tags))
+		@course.update_attributes(course_params)
 		# Probably a cleaner way to update this ... make it conditional on some other passed param?
 		@course.tag_associations.each do |ta|
 			ta.destroy!
 		end
-		params[:course][:tags].each do |t|
-			tag = Tag.find_by_text(t)
-			if tag == nil
-				new_tag = Tag.new(:text => t)
-				new_tag.save!
-				@course.tags << new_tag
-			else
-				@course.tags << tag
-			end
-		end
-		@course.save
+		# not used currently
+		if params[:course][:tags]
+		    params[:course][:tags].each do |t|
+		    	tag = Tag.find_by_text(t)
+		    	if tag == nil
+		    		new_tag = Tag.new(:text => t)
+		    		new_tag.save!
+		    		@course.tags << new_tag
+		    	else
+		    		@course.tags << tag
+		    	end
+		    end
+	    end
+		@course.save!
 		render json: @course
 	end
 
@@ -94,6 +99,6 @@ class CoursesController < ApplicationController
 	private
 
 	def course_params
-		params.require(:course).permit(:author, :title, :url, :description, :free, :publisher, :difficulty)
+		params.require(:course).permit(:author, :title, :url, :description, :publisher, :difficulty, :cost, :environment, :language, :format, :framework)
 	end
 end

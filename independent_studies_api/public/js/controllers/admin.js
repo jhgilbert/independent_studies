@@ -1,39 +1,15 @@
 // Controller for the resource management page (admins only)
 function adminCtrl($scope, $http, $location) {
     function clearTags() {
-        $scope.langTag = 'any';
-        $scope.frameworkTag = 'any';
-        $scope.costTag = 'any';
         $scope.topicTag = 'any';
-        $scope.difficultyTag = 'any';
-        $scope.environmentTag = 'any';
-        $scope.formatTag = 'any';
     }
 
     clearTags();
 
     function setNewTags() {
         var newTags = [];
-        if ($scope.langTag !== 'any') {
-            newTags.push($scope.langTag);
-        }
-        if ($scope.frameworkTag !== 'any') {
-            newTags.push($scope.frameworkTag);
-        }
-        if ($scope.difficultyTag !== 'any') {
-            newTags.push($scope.difficultyTag);
-        }
-        if ($scope.costTag !== 'any') {
-            newTags.push($scope.costTag);
-        }
         if ($scope.topicTag !== 'any') {
             newTags.push($scope.topicTag);
-        }
-        if ($scope.environmentTag !== 'any') {
-            newTags.push($scope.environmentTag);
-        }
-        if ($scope.formatTag !== 'any') {
-            newTags.push($scope.formatTag);
         }
         return newTags;
     }
@@ -92,6 +68,7 @@ function adminCtrl($scope, $http, $location) {
     // CRUD ========================================================================================================
 
     $scope.addResource = function () {
+        delete $scope.resources[index]['tags'];
         delete $scope.uiControls.formData['tagAddInProgress'];
         delete $scope.uiControls.formData['hasUnsavedChanges'];
         $scope.uiControls.formData['tags'] = setNewTags();
@@ -114,7 +91,7 @@ function adminCtrl($scope, $http, $location) {
 
     $scope.updateResource = function (index) {
         console.log("Index is " + index)
-        $scope.uiControls.formData['tags'] = setNewTags();
+        delete $scope.resources[index]['tags'];
         delete $scope.resources[index]['tagAddInProgress'];
         delete $scope.resources[index]['hasUnsavedChanges'];
         $http.put('/courses/' + $scope.resources[index]['id'], {'course': $scope.resources[index]}).success(function (){
