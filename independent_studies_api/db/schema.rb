@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131209035412) do
+ActiveRecord::Schema.define(version: 20131209053109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,19 +24,19 @@ ActiveRecord::Schema.define(version: 20131209035412) do
   end
 
   create_table "courses", force: true do |t|
-    t.string   "author"
-    t.string   "url"
+    t.string   "author",      default: ""
+    t.string   "url",         default: ""
     t.string   "title"
     t.text     "description"
-    t.string   "difficulty"
-    t.string   "publisher"
+    t.string   "difficulty",  default: ""
+    t.string   "publisher",   default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "language"
+    t.string   "language",    default: ""
     t.string   "cost"
     t.string   "format"
-    t.string   "environment"
-    t.string   "framework"
+    t.string   "environment", default: ""
+    t.string   "framework",   default: ""
   end
 
   create_table "enrollments", force: true do |t|
