@@ -10,7 +10,7 @@
                 <input type="radio" ng-model="langTag" value="Python"> Python <br />
                 <input type="radio" ng-model="langTag" value="Python"> PHP <br />
                 <input type="radio" ng-model="langTag" value="HTML/CSS"> HTML/CSS <br />
-                <input type="radio" ng-model="langTag" value=""> Linux Shell <br />
+                <input type="radio" ng-model="langTag" value="Linux shell"> Linux shell <br />
             </div>
             <div style="display: inline-block; vertical-align: top; padding: 10px;">
                 Difficulty<br />
@@ -39,17 +39,17 @@
                 <div ng-show="langTag === 'Python'">
                     <input type="radio" ng-model="frameworkTag" value="any"> any<br />
                     <input type="radio" ng-model="frameworkTag" value="Django"> Django<br />
-                    <input type="radio" ng-model="frameworkTag" value="Django"> Flask<br />
+                    <input type="radio" ng-model="frameworkTag" value="Flask"> Flask<br />
                 </div>
                 <div ng-show="langTag === 'JavaScript'">
                     <input type="radio" ng-model="frameworkTag" value="any"> any<br />
                     <input type="radio" ng-model="frameworkTag" value="jQuery"> jQuery<br />
                     <input type="radio" ng-model="frameworkTag" value="AngularJS"> AngularJS<br />
-                    <input type="radio" ng-model="frameworkTag" value="AngularJS"> Backbone.js<br />
-                    <input type="radio" ng-model="frameworkTag" value="AngularJS"> Ember<br />
+                    <input type="radio" ng-model="frameworkTag" value="Backbone.js"> Backbone.js<br />
+                    <input type="radio" ng-model="frameworkTag" value="Ember"> Ember<br />
                 </div>
                 <div ng-show="langTag === 'PHP'">
-                    <input type="radio" ng-model="frameworkTag" value="Cake"> CakePHP<br />
+                    <input type="radio" ng-model="frameworkTag" value="CakePHP"> CakePHP<br />
                 </div>
             </div>
             <div style="display: inline-block; vertical-align: top; padding: 10px;">

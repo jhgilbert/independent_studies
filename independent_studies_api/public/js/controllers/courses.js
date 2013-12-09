@@ -5,6 +5,7 @@ function coursesCtrl($scope, $http) {
     $scope.frameworkTag = 'any';
     $scope.costTag = 'any';
     $scope.topicTag = 'any';
+    $scope.difficultyTag = 'any';
 
     function setQueryTags() {
         $scope.tags = [];
