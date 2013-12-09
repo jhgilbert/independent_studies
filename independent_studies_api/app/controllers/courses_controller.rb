@@ -47,7 +47,13 @@ class CoursesController < ApplicationController
 		@course = Course.new(course_params.delete(:tags))
 		params[:course][:tags].each do |t|
 			tag = Tag.find_by_text(t)
-			@course.tags << tag
+			if tag == nil
+				new_tag = Tag.new(:text => t)
+				new_tag.save!
+				@course.tags << new_tag
+			else
+				@course.tags << tag
+			end
 		end
 		@course.save
 		render json: @course
@@ -63,7 +69,13 @@ class CoursesController < ApplicationController
 		puts "params[:course][:tags] is #{course_params[:tags]}"
 		params[:course][:tags].each do |t|
 			tag = Tag.find_by_text(t)
-			@course.tags << tag
+			if tag == nil
+				new_tag = Tag.new(:text => t)
+				new_tag.save!
+				@course.tags << new_tag
+			else
+				@course.tags << tag
+			end
 		end
 		@course.save
 		render json: @course
