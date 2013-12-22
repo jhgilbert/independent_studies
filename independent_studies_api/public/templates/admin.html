@@ -24,10 +24,13 @@
     <!-- detailed form -->
     <div class="section resource-manager" style="padding: 20px; min-height: 500px;" ng-show="uiControls.showForm">
         <form>
-            <h3 ng-show="selectedRow != null">Edit "{{uiControls.formData.title}}"</h3>
-            <h3 ng-show="selectedRow == null">Add new course</h3>
-            <div>
+            <h3 ng-show="selectedRow !== null">Edit "{{uiControls.formData.title}}"</h3>
+            <h3 ng-show="selectedRow === null">Add new course</h3>
+            <div ng-show="selectedRow !== null">
                 <div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="updateResource(selectedRow)">Save Changes</div>
+            </div>
+            <div ng-show="selectedRow === null">
+                <div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="addResource(selectedRow)">Save Changes</div>
             </div>
             <div style="display: inline-block; width: 375px; vertical-align: top;">
                 <p>Title: <input type="text" ng-model="uiControls.formData.title" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
