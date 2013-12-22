@@ -42,10 +42,16 @@
             <h3 class="notebook-subhead">Notes ({{notebookDetail.notes.length}})</h3>
             <a href="pages/notebook.html?enrollment_id={{notebookDetail.enrollment_id}}" class="button new-note">new note</a>
             <p ng-show="notebookDetail.notes.length === 0">You haven't added any notes yet.</p>
-            <div ng-repeat="note in notebookDetail.notes">
-                <p class="post-date">{{note.timestamp}} - <a href="/pages/notebook.html?note_id={{note.id}}">edit this note</a></p>
-                <div ng-bind="note.text"></div>
-                <hr/>
+            <div ng-show="notebookDetail.notes.length > 0" style="display: none;">
+                <div style="margin-top: 50px; margin-bottom: 5px;">
+                    <div style="display: inline-block; padding-right: 20px; width: 50px;"><em>Date</em></div>
+                    <div style="display: inline-block;"><em>Text preview</em></div>
+                </div>
+                <div ng-repeat="note in notebookDetail.notes" style="margin-bottom: 10px;">
+                    <div ng-bind="note.timestamp" style="padding-right: 20px; width: 50px; vertical-align: top; display: inline-block;"></div>
+                    <div ng-bind="note.text" style="padding-right: 20px; display: inline-block; width: 500px; text-overflow:ellipsis; overflow: hidden; white-space:nowrap; vertical-align: top;"></div>
+                    <div style="display: inline-block; vertical-align: top;"><a href="/pages/notebook.html?note_id={{note.id}}">edit this note</a></div>
+                </div>
             </div>
         </div>
     </div>
