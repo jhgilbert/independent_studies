@@ -2,6 +2,7 @@
 <html ng-app="independentStudies" ng-controller="mainCtrl">
 <head>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/controllers/dashboard.js"></script>
@@ -53,9 +54,9 @@
 
 </head>
 <body>
-<div class="overlay" ng-show="uiControls.activeAlert"> </div>
+<div class="overlay" ng-show="uiControls.activeAlert" style="display: none;"> </div>
 
-<div class="popup course-completed" ng-show="uiControls.graduationAlert">
+<div class="popup course-completed" ng-show="uiControls.graduationAlert" style="display: none;">
     <h3>Congratulations!</h3>
     <p>You've completed a course. This course will no longer appear on your dashboard; to gloat over your achievements
     properly, you'll need to visit your transcript page.</p>
