@@ -13,6 +13,15 @@ function adminCtrl($scope, $http, $location) {
         $scope.tags = data['tags'];
     });
 
+    $scope.toggleTag = function(courseID, tagID, isAdding) {
+        var postData = { course_id: courseID, tag_id: tagID };
+        if (isAdding) {
+            $http.post("/tags/add", postData).success(function () {});
+        } else {
+            $http.post("/tags/remove", postData).success(function () {});
+        }
+    };
+
     $scope.selectedRow = null;
 
     $scope.selectRow = function (index) {
@@ -52,10 +61,6 @@ function adminCtrl($scope, $http, $location) {
         }
         $scope.uiControls.formData = {
             title: null,
-            difficulty: null,
-            cost: null,
-            environment: null,
-            framework: null,
             url: null,
             hasUnsavedChanges: false,
             description: null,
@@ -66,9 +71,19 @@ function adminCtrl($scope, $http, $location) {
     resetFormData();
 
     $scope.initNew = function() {
+        $scope.formAction = "new";
         resetFormData();
         $scope.uiControls.showForm = true;
         $scope.selectedRow = null;
+    };
+
+    $scope.initEdit = function(courseIndex) {
+        $scope.formAction = "edit";
+        $scope.uiControls.showForm = true;
+        $scope.uiControls.formData = $scope.resources[courseIndex];
+        $http.get("/tags?course_id=" + $scope.resources[courseIndex].id).success(function (data) {
+            $scope.uiControls.formData.tags = data['tags'];
+        });
     };
 
     // CRUD ========================================================================================================

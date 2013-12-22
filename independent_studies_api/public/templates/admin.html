@@ -13,7 +13,7 @@
                 <td ng-bind="r.author"></td>
                 <td ng-bind="r.publisher"></td>
                 <td>
-                    <div class="button" ng-show="!r.hasUnsavedChanges" ng-click="uiControls.showForm=true; uiControls.formData=r; selectRow($index)">Edit Details</div>
+                    <div class="button" ng-show="!r.hasUnsavedChanges" ng-click="initEdit($index)">Edit Details</div>
                     <div class="button" ng-click="deleteResource(r.id)">Delete</div></td>
             </tr>
         </table>
@@ -35,15 +35,14 @@
                 <textarea style="width: 350px; height: 150px;" ng-model="uiControls.formData.description" ng-change="uiControls.formData.hasUnsavedChanges=true"></textarea>
                 </p>
             </div>
-
-            <div style="display: inline-block; width: 400px; vertical-align: top; margin-left: 50px;">
+            <div ng-show="formAction==='edit'">
                 <h4>Set Values</h4>
-                <div ng-repeat="tagset in tags">
-                    <h5 ng-bind="tagset.category"></h5>
-                    <ul>
-                        <li ng-repeat="option in tagset.options"><span ng-bind="option.text"></span></li>
-                    </ul>
-                    <hr>
+                <div ng-repeat="tagset in tags" style="display: inline-block; vertical-align: top; padding: 5px; margin-right: 10px; margin-bottom: 10px; background-color: lightgray;">
+                    <span ng-bind="tagset.category"></span>
+                    <div ng-repeat="option in tagset.options">
+                        <input type="checkbox" ng-checked="uiControls.formData.tags[tags.indexOf(tagset)].text_list.indexOf(option.text) !== -1"
+                               ng-model="option.toggleState" ng-change="toggleTag(uiControls.formData.id, option.id, option.toggleState)" />
+                        <span ng-bind="option.text"></span></div>
                 </div>
             </div>
         </form>

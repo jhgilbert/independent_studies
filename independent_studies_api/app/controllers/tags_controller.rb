@@ -26,9 +26,18 @@ class TagsController < ApplicationController
   	categories.each do |c|
   		tag_obj = {'category' => c}
   		tag_obj['options'] = []
+  		tag_obj['text_list'] = []
+  		# get the appropriate set of tags
+  		if params['course_id']
+  			course = Course.find(params['course_id'])
+  			tags = course.tags.where(:category => c).all
+  		else
+  			tags = Tag.where(:category => c).all
+  		end
   		# build array of options for each category hash
-  		Tag.where(:category => c).all.each do |tag|
+  		tags.each do |tag|
   			tag_obj['options'] << {'id' => tag.id, 'text' => tag.text}
+  			tag_obj['text_list'] << tag.text
   		end
   		@response['tags'] << tag_obj
   	end
@@ -36,8 +45,22 @@ class TagsController < ApplicationController
   end
 
   def add
+  	course = Course.find(params['course_id'])
+  	tag = Tag.find(params['tag_id'])
+  	course.tags << tag
+  	course.save!
+  	@response = {'status' => 'success'}
+
+  	render json: @response
   end
 
   def remove
+  	course = Course.find(params['course_id'])
+  	tag = Tag.find(params['tag_id'])
+  	course.tags.delete(tag)
+  	course.save!
+  	@response = {'status' => 'success'}
+
+  	render json: @response
   end
 end
