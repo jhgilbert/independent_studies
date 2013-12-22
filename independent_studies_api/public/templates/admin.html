@@ -24,13 +24,18 @@
     <!-- detailed form -->
     <div class="section resource-manager" style="padding: 20px; min-height: 500px;" ng-show="uiControls.showForm">
         <form>
+            <h3 ng-show="selectedRow != null">Edit "{{uiControls.formData.title}}"</h3>
+            <h3 ng-show="selectedRow == null">Add new course</h3>
+            <div>
+                <div class="button" ng-show="uiControls.formData.hasUnsavedChanges" ng-click="updateResource(selectedRow)">Save Changes</div>
+            </div>
             <div style="display: inline-block; width: 375px; vertical-align: top;">
-                <h3 ng-show="selectedRow != null">Edit "{{uiControls.formData.title}}"</h3>
-                <h3 ng-show="selectedRow == null">Add new course</h3>
                 <p>Title: <input type="text" ng-model="uiControls.formData.title" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
                 <p>Author: <input type="text" ng-model="uiControls.formData.author" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
                 <p>Publisher: <input type="text" ng-model="uiControls.formData.publisher" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
                 <p>URL: <input style="width: 200px;" type="text" ng-model="uiControls.formData.url" ng-change="uiControls.formData.hasUnsavedChanges=true"></p>
+            </div>
+            <div style="display: inline-block;">
                 <p>Description:</p>
                 <textarea style="width: 350px; height: 150px;" ng-model="uiControls.formData.description" ng-change="uiControls.formData.hasUnsavedChanges=true"></textarea>
                 </p>
