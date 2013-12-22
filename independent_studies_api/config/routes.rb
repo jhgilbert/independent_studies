@@ -1,4 +1,7 @@
 IndependentStudiesApi::Application.routes.draw do
+  resources :tags, :only => [:index]
+  get "tags/add"
+  get "tags/remove"
   resources :notes, :only => [:create, :update, :show]
 
   resources :advancements, :only => [:create]

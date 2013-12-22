@@ -9,6 +9,10 @@ function adminCtrl($scope, $http, $location) {
         framework: "any"
     };
 
+    $http.get("/tags").success(function (data) {
+        $scope.tags = data['tags'];
+    });
+
     $scope.selectedRow = null;
 
     $scope.selectRow = function (index) {
