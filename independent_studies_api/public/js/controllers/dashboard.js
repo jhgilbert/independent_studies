@@ -2,8 +2,16 @@
 function dashCtrl($scope, $http) {
     $scope.navControls.selectedPanel = 'dashboard';
 
-    $scope.uiControls.selectedNotebookItem = 0;
+    console.log($.cookie());
 
+    if ($.cookie('selected_notebook_item')) {
+        $scope.uiControls.selectedNotebookItem = parseInt($.cookie('selected_notebook_item'));
+    } else {
+        $scope.uiControls.selectedNotebookItem = 0;
+        $.cookie('selected_notebook_item', 0);
+    }
+
+    console.log($scope.uiControls.selectedNotebookItem);
 
     function buildProgressBars() {
         for (var i=0;i<$scope.notebookIndex.length;i++) {
@@ -85,6 +93,7 @@ function dashCtrl($scope, $http) {
 
     $scope.selectNotebookItem = function(index) {
         $scope.uiControls.selectedNotebookItem = index;
+        $.cookie('selected_notebook_item', index);
         getNotebookDetail($scope.notebookIndex[index]['id']);
     };
 
