@@ -1,19 +1,18 @@
 function coursesCtrl($scope, $http) {
     $scope.navControls.selectedPanel = 'courses';
-    $scope.searchParams = {
-        language: "any",
-        environment: "any",
-        format: "any",
-        cost: "any",
-        difficulty: "any",
-        framework: "any"
-    };
+
+    $http.get("/tags").success(function (data) {
+        $scope.tags = data['tags'];
+    });
+
+    $scope.searchTags = [];
 
     $scope.refreshCourses = function() {
         $http({
             url: '/courses',
             method: 'GET',
-            params: $scope.searchParams
+            //TODO: This is awkward -- how can I use Angular to pass a real array as a GET parameter?
+            params: {tags: $scope.searchTags.join(",")}
         }).success(function (data) {
                 $scope.courses = data.courses;
                 var enrollmentKey = data.enrollment_key;
@@ -23,24 +22,21 @@ function coursesCtrl($scope, $http) {
                         $scope.courses[i].enrolled = true;
                     }
                 }
-        });
+            });
     };
 
     $scope.refreshCourses();
 
-    /**
-     * This is for later ...
-    $scope.toggleTag = function(tag) {
-        var index = $scope.tags.indexOf(tag);
+    $scope.toggleTag = function(tagID) {
+        var index = $scope.searchTags.indexOf(tagID);
         if (index === -1) {
-            $scope.tags.push(tag);
+            $scope.searchTags.push(tagID);
         }
         else {
-            $scope.tags.splice(index, 1);
+            $scope.searchTags.splice(index, 1);
         }
-        console.log("Scope tags are " + $scope.tags);
+        console.log("Search tags are " + $scope.searchTags);
     };
-     */
 
     $scope.createEnrollment = function(index, course_id) {
         $http.post('/enrollments', {'enrollment': { 'course_id': course_id}}).success(function () {

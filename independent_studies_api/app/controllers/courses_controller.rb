@@ -1,45 +1,43 @@
 class CoursesController < ApplicationController
 	before_filter :verify_admin_privileges, :only => [:create, :destroy, :update]
-
-	def index
-		# TODO: Admin and the course listing need different things ... may be 
-		# worth splitting into two routes to speed up both types of requests
-
-		@response = {}
-		courses = Course.all
-		if params
-			if params[:language] != "any"
-				courses = courses.where(:language => params[:language]).load
-			end
-			if params[:framework] != "any"
-				courses = courses.where(:framework => params[:framework]).load
-			end
-			if params[:difficulty] != "any"
-				courses = courses.where(:difficulty => params[:difficulty]).load
-			end
-			if params[:cost] != "any"
-				courses = courses.where(:cost => params[:cost]).load
-			end
-			if params[:format] != "any"
-				courses = courses.where(:format => params[:format]).load
-			end
-			if params[:environment] != "any"
-				courses = courses.where(:environment => params[:environment]).load
-			end
-		end
-		enrollment_key = {}
-		if session[:id] != nil
-			user = User.find(session[:id])
-			courses.each do |c|
-				if user.courses.include?(c)
-					enrollment_key[c.id] = true
-				end
-			end
-		end
-		@response['courses'] = courses
-		@response['enrollment_key'] = enrollment_key
-		render json: @response
-	end
+ 
+    def index
+        # TODO: Admin and the course listing need different things ... may be 
+        # worth splitting into two routes to speed up both types of r
+        @response = {}
+        courses = Course.preload(:tags).load
+        @courses = []
+        courses.each do |c|
+                # restrict matches to desired tags
+                match_failed = false
+                if params[:tags] != []
+                        params[:tags].split(',').each do |id|
+                                tag = Tag.find(id)
+                                match_failed = true unless c.tags.include?(tag)
+                        end
+                end
+                next if match_failed
+                # add tags into returned data - only really needed for admin
+                course_info = c.attributes # TODO: Method is expensive ... is there a better way?
+                course_info['tags'] = []
+                c.tags.each do |t|
+                        course_info['tags'] << t.text
+                end
+            @courses << course_info
+        end
+        enrollment_key = {}
+        if session[:id] != nil
+                user = User.find(session[:id])
+                courses.each do |c|
+                        if user.courses.include?(c)
+                                enrollment_key[c.id] = true
+                        end
+                end
+        end
+        @response['courses'] = @courses
+        @response['enrollment_key'] = enrollment_key
+        render json: @response
+    end
 
 	def create
 		@course = Course.new(course_params)
