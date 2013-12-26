@@ -1,13 +1,6 @@
 // Controller for the resource management page (admins only)
 function adminCtrl($scope, $http, $location) {
-    $scope.searchParams = {
-        language: "any",
-        environment: "any",
-        format: "any",
-        cost: "any",
-        difficulty: "any",
-        framework: "any"
-    };
+    $scope.searchTags = [];
 
     $http.get("/tags").success(function (data) {
         $scope.tags = data['tags'];
@@ -37,7 +30,7 @@ function adminCtrl($scope, $http, $location) {
         $http({
             url: '/courses',
             method: 'GET',
-            params: $scope.searchParams
+            params: {tags: $scope.searchTags.join(",")}
         }).success(function (data, status, headers, config) {
             $scope.resources = data.courses;
         });
