@@ -22,9 +22,12 @@
 
             <!-- PROGRESS UPDATE DIV -->
             <div ng-show="advancementInProgress" class="advancement-form">
+                <p style="text-align: right; font-size: 12px;">
+                    <input type="text" style="width: 30px;" ng-model="completedUnits" ng-change="calculateAdvancement()"> out of
+                    <input type="text" style="width: 30px;" ng-model="totalUnits" ng-change="calculateAdvancement()"> units,<br/>
+                    or enter percentage:&nbsp;
+                    <input type="text" ng-model="advancementAmount" style="width: 30px;">%</p>
                 <p>
-                    <input type="text" ng-model="advancementAmount" style="width: 30px;">%
-                </p>
             </div>
             <div ng-hide="advancementInProgress" class="button advancement-update" ng-click="advancementInProgress=true">update progress</div>
             <div ng-show="advancementInProgress" class="button advancement-save" ng-click="createAdvancement(notebookDetail.enrollment_id)">save</div>

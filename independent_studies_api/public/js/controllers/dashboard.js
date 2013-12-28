@@ -11,8 +11,6 @@ function dashCtrl($scope, $http) {
         $.cookie('selected_notebook_item', 0);
     }
 
-    console.log($scope.uiControls.selectedNotebookItem);
-
     function buildProgressBars() {
         for (var i=0;i<$scope.notebookIndex.length;i++) {
             $scope.notebookIndex[i].completedArray = buildCompletedArray($scope.notebookIndex[i]['percentage']);
@@ -120,6 +118,12 @@ function dashCtrl($scope, $http) {
     getNotebookDetail($scope.note);
 
     // PROGRESS UPDATES ================================================================================================
+    $scope.totalUnits = null;
+    $scope.completedUnits = null;
+
+    $scope.calculateAdvancement = function () {
+        $scope.advancementAmount = parseInt((parseInt($scope.completedUnits) * 100) / parseInt($scope.totalUnits));
+    };
 
     $scope.createAdvancement = function(enrollment_id) {
         $http.post('/advancements', {'advancement': {'enrollment_id': enrollment_id, 'amount': (parseInt($scope.advancementAmount) - $scope.notebookDetail.percentage)}}).success(function () {
