@@ -9,12 +9,13 @@ IndependentStudiesApi::Application.routes.draw do
   get "notebook/index"
   get "notebook/detail"
   resources :enrollments, :only => [:create]
+  get "enrollments/transcript"
 
   resources :sessions, :only => [:create, :index]
   get "static_pages/home"
   get "sessions/logout"
   # root 'static_pages#home'
-  resources :courses
+  resources :courses, :only => [:create, :index, :update, :destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
