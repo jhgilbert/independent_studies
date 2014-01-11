@@ -16,12 +16,20 @@
     </div>
     <div class="section">
         <div ng-repeat="c in courses" style="border: 1px solid black; padding: 15px;">
-            <h3><a href="{{c.url}}"><span ng-bind="c.title"></span> (<span ng-bind="c.difficulty"></span>)</a></h3>
-            <p ng-bind="c.author"></p>
-            <p ng-bind-html-unsafe="c.description"></p>
-            <div style="float: right;" ng-show="sessionData.userIsLoggedIn && !c.enrolled" class="button" ng-click="createEnrollment($index, c.id)">Enroll</div>
-            <p ng-show="c.enrolled"><em>You are enrolled in this course. To work on it, visit your <a href="#/dashboard">dashboard</a>.</em></p>
-            <br style="clear: both;" />
+            <div style="display: inline-block; vertical-align: top; padding-right: 10px;">
+                <div ng-show="sessionData.userIsLoggedIn && !c.enrolled" style="width: 90px; margin-bottom: 10px; margin-left: 0px; text-align: center;" class="button" ng-click="createEnrollment($index, c.id)">Enroll</div>
+                <div ng-show="c.enrolled" style="margin-bottom: 10px; text-align: center;"><a href="#/dashboard">Enrolled</a></div>
+                <div>
+                    <img src="https://s3-us-west-2.amazonaws.com/independent-studies/course_images/{{c.img}}" width="100px" height="auto" />
+                </div>
+            </div>
+            <div style="display: inline-block; max-width: 750px; vertical-align: top;">
+                <h3 style="margin-top: 0px;"><a href="{{c.url}}"><span ng-bind="c.title"></span></a></h3>
+                <p ng-show="c.author">Author: <span ng-bind="c.author"></span></p>
+                <p ng-show="c.publisher">Publisher: <span ng-bind="c.publisher"></span></p>
+                <p ng-bind-html-unsafe="c.description"></p>
+                <br style="clear: both;" />
+            </div>
         </div>
     </div>
 </div>
